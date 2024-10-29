@@ -2,13 +2,12 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import './options.css'
 
-// const App: React.FC<{}> = () => {
-//   return (
-//     <div>
-//       <img src="icon.png" />
-//     </div>
-//   )
-// }
+const App = () => {
+
+    return(<div>
+        Login/Signup
+    </div>)
+}
 
 const container = document.createElement('div')
 document.body.appendChild(container)
