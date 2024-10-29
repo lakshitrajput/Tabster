@@ -1,0 +1,28 @@
+{
+  "name": "Tabster",
+  "description": "React chrome extension",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "icons": {
+    "19": "icon.png",
+    "38": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "React Extension",
+    "default_icon": "icon.png"
+  },
+  "permissions": ["storage"],
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+/plugins/dist
+/plugins/node_modules
+/backend/node_modules
+
+.env
