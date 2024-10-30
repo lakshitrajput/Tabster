@@ -10,11 +10,10 @@
     "128": "icon.png"
   },
   "action": {
-    "default_popup": "popup.html",
     "default_title": "React Extension",
     "default_icon": "icon.png"
   },
-  "permissions": ["storage","contextMenus"],
+  "permissions": ["storage","contextMenus","windows","tabs","activeTab","system.display"],
   "options_page": "options.html",
   "background": {
     "service_worker": "background.js"
