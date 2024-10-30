@@ -78,7 +78,7 @@ function Auth() {
             <MDBRow>
 
                 <MDBCol col='10' md='6'>
-                    <img src="https://workona.com/_next/static/media/tab-manager-hero.f3b46089.png" class="img-fluid" alt="Sample image" />
+                    <img src="https://workona.com/_next/static/media/tab-manager-hero.f3b46089.png" className="img-fluid" alt="Sample image" />
                 </MDBCol>
 
                 <MDBCol col='4' md='6'>
@@ -88,11 +88,11 @@ function Auth() {
                         <p className="lead fw-normal mb-0 me-3 text-secondary">Where Tabs Meet Innovation</p>
                     </div>
                     {
-                        !login && <MDBInput wrAutherClass='mb-4' label='Name (min: 5 words)' id='formControlLg' name="name" value={user.name} type='name' size="lg" className='mb-3 mt-2' onChange={(e) => handleChange(e)} />
+                        !login && <MDBInput label='Name (min: 5 words)' id='formControlLg' name="name" value={user.name} type='name' size="lg" className='mb-3 mt-2' onChange={(e) => handleChange(e)} />
                     }
 
-                    <MDBInput wrAutherClass='mb-4' label='Email address' id='formControlLg' name='email' type='email' value={user.email} size="lg" className='mb-3 mt-2' onChange={(e) => handleChange(e)} />
-                    <MDBInput wrAutherClass='mb-4' label='Password (min: 5 words)' id='formControlLg' name='password' type='password' value={user.password} size="lg" onChange={(e) => handleChange(e)} />
+                    <MDBInput label='Email address' id='formControlLg' name='email' type='email' value={user.email} size="lg" className='mb-3 mt-2' onChange={(e) => handleChange(e)} />
+                    <MDBInput label='Password (min: 5 words)' id='formControlLg' name='password' type='password' value={user.password} size="lg" onChange={(e) => handleChange(e)} />
 
 
 
