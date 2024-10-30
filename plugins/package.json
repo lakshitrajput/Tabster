@@ -2,7 +2,10 @@
   "name": "tabster",
   "version": "1.0.0",
   "options": {
-    "allowedHosts": ["localhost", ".localhost"],
+    "allowedHosts": [
+      "localhost",
+      ".localhost"
+    ],
     "proxy": "https://localhost:4000/"
   },
   "description": "react chrome extension",
@@ -34,6 +37,7 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
+    "react-router-dom": "^6.27.0",
     "webpack-dev-server": "^5.1.0"
   }
 }
