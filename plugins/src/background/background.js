@@ -5,10 +5,10 @@ chrome.action.onClicked.addListener(function() {
     chrome.system.display.getInfo(function(displays) {
         let primaryDisplay = displays.find(display => display.isPrimary);
 
-        var w = primaryDisplay.bounds.width * 0.7;
-        var h = primaryDisplay.bounds.height * 0.5;
-        var left = (primaryDisplay.bounds.width / 2) - (w / 2);
-        var top = (primaryDisplay.bounds.height / 2) - (h / 2);
+        var w = Math.round(primaryDisplay.bounds.width * 0.7);
+        var h = Math.round(primaryDisplay.bounds.height * 0.5);
+        var left = Math.round((primaryDisplay.bounds.width / 2) - (w / 2));
+        var top = Math.round((primaryDisplay.bounds.height / 2) - (h / 2))
 
         chrome.windows.create({
             'url': 'popup.html',
