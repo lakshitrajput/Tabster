@@ -38,5 +38,3 @@ chrome.action.onClicked.addListener(function() {
 });
 
 
-
-
