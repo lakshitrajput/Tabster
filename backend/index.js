@@ -17,5 +17,7 @@ const server = app.listen(4000,()=>{
 
 DB();
 
+const authRouter = require('./Routes/authRoute');
 
 
+app.use('/api/auth', authRouter);
