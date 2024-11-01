@@ -3,15 +3,35 @@ import Card from '../components/Card'
 
 export const Home = () => {
     const [tabs, setTabs] = useState([]);
+    const port = chrome.runtime.connect({ name: "popup" });
 
     useEffect(() => {
-        chrome.tabs.query({}, (tabs) => {
-            setTabs(tabs);
-            // console.log(tabs)
-        })
-
+        getAllTabs();
     }, [])
 
+    useEffect(() => {
+        getAllTabs();
+    }, [tabs])
+
+
+    useEffect(() => {
+        port.onMessage.addListener((res) => {
+            const action = res.action;
+            if(action == 0){
+                setTabs(res.data);
+                console.log(res.data);
+            }
+            
+        })
+    }, [port])
+
+    // request to background.js for tabs
+    const getAllTabs = () => {
+        const msg = {
+            action: 0
+        }
+        port.postMessage(msg);
+    }
 
     return (
     <div className='home'>
@@ -40,6 +60,7 @@ export const Home = () => {
                             <Card 
                                 key={tab.id}
                                 tab={tab}
+                                port={port}
                             />
                     ))}
                 </div>
