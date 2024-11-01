@@ -67,6 +67,9 @@ chrome.runtime.onConnect.addListener((port) => {
         else if(action == 6){
             setActiveTab(action, msg.id);
         }
+        else if(action == 7){
+            createIncognitoTab(action);
+        }
     });
 
 
@@ -117,6 +120,12 @@ chrome.runtime.onConnect.addListener((port) => {
         chrome.tabs.update(tabId, { active: true }, () => {
             sendAllTabs(1);
         })
+    }
+
+    const createIncognitoTab = (action) => {
+        chrome.windows.create({ incognito: true, url: 'about:blank' }, (window) => {
+            sendAllTabs(1);
+        });
     }
 
 });
