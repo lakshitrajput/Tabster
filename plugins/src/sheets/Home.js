@@ -33,6 +33,13 @@ export const Home = () => {
         port.postMessage(msg);
     }
 
+    const createNewTab = () => {
+        const msg = {
+            action: 5
+        }
+        port.postMessage(msg);
+    }
+
     return (
     <div className='home'>
         <div className='home-content'>
@@ -66,7 +73,7 @@ export const Home = () => {
                 </div>
             </div>
             <div className='mt-2'>
-                    <button className="button-85" role="button">Add Tab</button>
+                    <button className="button-85" role="button" onClick={createNewTab}><i className='fa-sharp-duotone fa-solid fa-plus'></i></button>
             </div>
         </div>
     </div>)

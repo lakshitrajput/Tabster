@@ -10,6 +10,36 @@ const Card = ({ tab, port }) => {
         port.postMessage(msg);
     }
 
+    const pinTab = (id) => {
+        const msg = {
+            action: 2,
+            id: id
+        }
+        port.postMessage(msg);
+    }
+    const unPinTab = (id) => {
+        const msg = {
+            action: 3,
+            id: id
+        }
+        port.postMessage(msg);
+    }
+
+    const duplicateTab = (id) => {
+        const msg = {
+            action: 4,
+            id: id
+        }
+        port.postMessage(msg);
+    }
+
+    const setActiveTab = (id) => {
+        const msg = {
+            action: 6,
+            id: id
+        }
+        port.postMessage(msg);
+    }
 
     return (
 
@@ -35,7 +65,33 @@ const Card = ({ tab, port }) => {
                     color: "#555"
                 }}></i>
 
-                <i className="fas fa-times" onClick={() => {closeTab(tab.id) }} 
+                
+                <i className="fa-solid fa-clone" onClick={() => {duplicateTab(tab?.id) }} 
+                style={{
+                    position: "absolute",
+                    top: "5px",
+                    right: "48px",
+                    cursor: "pointer",
+                    color: "#555"
+                }}></i>
+                {tab?.pinned ? <i className="fa-solid fa-thumbtack-slash" onClick={() => {unPinTab(tab?.id) }}
+                style={{
+                    position: "absolute",
+                    top: "5px",
+                    right: "23px",
+                    cursor: "pointer",
+                    color: "#555"
+                }}></i> : 
+                <i className="fa-solid fa-thumbtack" onClick={() => {pinTab(tab?.id) }}
+                style={{
+                    position: "absolute",
+                    top: "5px",
+                    right: "23px",
+                    cursor: "pointer",
+                    color: "#555"
+                }}></i>
+                }
+                <i className="fas fa-times" onClick={() => {closeTab(tab?.id) }} 
                 style={{
                     position: "absolute",
                     top: "5px",
@@ -45,7 +101,15 @@ const Card = ({ tab, port }) => {
                 }}></i>
             </div>
 
-            <img style={{ width: "90px", height: "90px", objectFit: "fit", alignItems: "center", position: "relative", top: "15px", left: "40px", marginTop: "30px", backgroundColor:"" }} src={(tab.favIconUrl) === "" ? "https://www.scwitservices.com/images/easyblog_shared/February_2021/2-17-21/b2ap3_thumbnail_131006821_multiple_tabs_400.jpg" : tab.favIconUrl}
+            <img onClick={() => {
+                setActiveTab(tab?.id)
+            }}
+                style={{ width: "90px", 
+                height: "90px", 
+                objectFit: "fit", 
+                alignItems: "center", position: "relative", top: "15px", left: "40px", 
+                marginTop: "30px", backgroundColor:"", cursor: "pointer"
+                }} src={(tab.favIconUrl) === "" ? "https://cdn-icons-png.flaticon.com/512/152/152759.png" : tab.favIconUrl}
                 className="card-img-top" alt="..." />
             <div className="card-body text-center">
                 <h5 className="card-title" style={{

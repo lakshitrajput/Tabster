@@ -52,6 +52,21 @@ chrome.runtime.onConnect.addListener((port) => {
             // close tab with the given id
             closeTab(action, msg.id);
         }
+        else if(action == 2){
+            pinTab(action, msg.id);
+        }
+        else if(action == 3){
+            unPinTab(action, msg.id);
+        }
+        else if(action == 4){
+            duplicateTab(action, msg.id);
+        }
+        else if(action == 5){
+            createNewTab(action);
+        }
+        else if(action == 6){
+            setActiveTab(action, msg.id);
+        }
     });
 
 
@@ -59,7 +74,6 @@ chrome.runtime.onConnect.addListener((port) => {
     const sendAllTabs = (action) => {
         chrome.tabs.query({}, (tabs) => {
             const tabsArr = tabs;
-
             const res = {
                 action: action,
                 data: tabsArr
@@ -70,10 +84,41 @@ chrome.runtime.onConnect.addListener((port) => {
 
     
     const closeTab = (action, tabId) => {
-        chrome.tabs.remove(tabId);
-        sendAllTabs(1);
+        chrome.tabs.remove(tabId, () => {
+            sendAllTabs(1);
+        });
     }
-    
+
+    const pinTab = (action, tabId) => {
+        chrome.tabs.update(tabId, { pinned: true }, () => {
+            sendAllTabs(1);
+        });
+    }
+
+    const unPinTab = (action, tabId) => {
+        chrome.tabs.update(tabId, { pinned: false }, () => {
+            sendAllTabs(1);
+        });
+    }
+
+    const duplicateTab = (action, tabId) => {
+        chrome.tabs.duplicate(tabId, () => {
+            sendAllTabs(1);
+        })
+    }
+
+    const createNewTab = (action) => {
+        chrome.tabs.create({}, () => {
+            sendAllTabs(1);
+        })
+    }
+
+    const setActiveTab = (action, tabId) => {
+        chrome.tabs.update(tabId, { active: true }, () => {
+            sendAllTabs(1);
+        })
+    }
+
 });
 
 
