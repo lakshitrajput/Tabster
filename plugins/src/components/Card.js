@@ -100,7 +100,7 @@ const Card = ({ tab, port }) => {
                     color: "#555"
                 }}></i>
             </div>
-
+            <div className='card-hover'>
             <img onClick={() => {
                 setActiveTab(tab?.id)
             }}
@@ -119,6 +119,91 @@ const Card = ({ tab, port }) => {
                     textOverflow: "ellipsis",
                     maxWidth: "150px"
                 }} >{tab.title}</h5>
+            </div>
+            <div className='cardFooter'>
+                    <div style={{
+                        backgroundColor: "#f0f0f0",
+                        height: "90px",
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                        justifyContent: "center",
+                        padding: "8px 8px",
+                    }}>
+                       
+                        <div className="fas fa-times" onClick={() => { closeTab(tab?.id) }}
+                            style={{
+                                cursor: "pointer",
+                                width: "30px",
+                                height: "20px",
+                                color: "#555"
+                            }}></div>
+                        <div className="fas fa-times" onClick={() => { closeTab(tab?.id) }}
+                            style={{
+                                cursor: "pointer",
+                                width: "30px",
+                                height: "20px",
+                                color: "#555"
+                            }}></div>
+                        <div className="fas fa-times" onClick={() => { closeTab(tab?.id) }}
+                            style={{
+                                cursor: "pointer",
+                                width: "30px",
+                                height: "20px",
+                                color: "#555"
+                            }}></div>
+                        <div className="fas fa-times" onClick={() => { closeTab(tab?.id) }}
+                            style={{
+                                cursor: "pointer",
+                                width: "30px",
+                                height: "20px",
+                                color: "#555"
+                            }}></div>
+                        <div className="fas fa-times" onClick={() => { closeTab(tab?.id) }}
+                            style={{
+                                cursor: "pointer",
+                                width: "30px",
+                                height: "20px",
+                                color: "#555"
+                            }}></div>
+                        <div className="fas fa-times" onClick={() => { closeTab(tab?.id) }}
+                            style={{
+                                cursor: "pointer",
+                                width: "30px",
+                                height: "20px",
+                                color: "#555"
+                            }}></div>
+                        <div className="fas fa-times" onClick={() => { closeTab(tab?.id) }}
+                            style={{
+                                cursor: "pointer",
+                                width: "30px",
+                                height: "20px",
+                                color: "#555"
+                            }}></div>
+                        <div className="fas fa-times" onClick={() => { closeTab(tab?.id) }}
+                            style={{
+                                cursor: "pointer",
+                                width: "30px",
+                                height: "20px",
+                                color: "#555"
+                            }}></div>
+                        <div className="fas fa-times" onClick={() => { closeTab(tab?.id) }}
+                            style={{
+                                cursor: "pointer",
+                                width: "30px",
+                                height: "20px",
+                                color: "#555"
+                            }}></div>
+                        <div className="fas fa-times" onClick={() => { closeTab(tab?.id) }}
+                            style={{
+                                cursor: "pointer",
+                                width: "30px",
+                                height: "20px",
+                                color: "#555"
+                            }}></div>
+                    </div>
+            </div>
             </div>
         </div>
     )

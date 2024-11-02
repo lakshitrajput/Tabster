@@ -132,4 +132,12 @@ body {
   left: 0;
   top: 0;
   border-radius: 10px;
+
+}
+.card-hover{
+  height: 100%;
+}
+.card-hover:hover{
+  position: relative;
+  top:-95px
 }
