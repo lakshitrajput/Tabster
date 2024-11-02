@@ -11,27 +11,31 @@ async function loginUser(req, res) {
    
     const user = await userModel.findOne({ email: email }).exec();
    
- 
+     
         if (user) {
             const match = await bcrypt.compare(password, user.password);
             if (match) {
                 const id = user['_id']
                 const token = jwt.sign({ payload: id }, jwtKey);
                 res.cookie('user', token, { httpOnly: true});
-
               
-                res.status(200).json({
+                res.status(201).json({
+                    success: true,
                     meassage: "Login successfully",
                     data: user,
                     token: token
                 })
             }
             else {
-                res.json({ meassage: "Invalid Password" });
+                res.json({
+                    success: false,
+                     meassage: "Invalid Password" });
             }
         }
         else {
-            res.json({ meassage: "Invalid username" });
+            res.json({
+                success: false,
+                meassage: "Invalid username" });
         }
     }
 
@@ -40,6 +44,7 @@ async function register(req, res) {
     if(!req.body.name || !req.body.email || !req.body.password){
         return res.status(400).json({
             status: 400,
+            success: false,
             message: "Please enter all the fields"
         });
     }
@@ -48,6 +53,7 @@ async function register(req, res) {
         const user = await userModel.create(body);
 
         res.status(201).json({
+            success: true,
             message: "Registered Successfully",
             data: user
         });
