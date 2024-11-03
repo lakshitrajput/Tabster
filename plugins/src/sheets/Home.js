@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
+import GroupCard from '../components/GroupCard';
 
 export const Home = () => {
     const [tabs, setTabs] = useState([]);
@@ -69,6 +70,7 @@ export const Home = () => {
             </div>
             <div>
                 <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>
+                        <GroupCard color="red" name="My Tabs" />
                     {tabs.map((tab) => (
                         (tab.title != 'tabster') &&
                             <Card 
