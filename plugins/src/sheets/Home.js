@@ -8,6 +8,13 @@ export const Home = () => {
 
     useEffect(() => {
         getAllTabs();
+
+        // to prevent the port becoming inactive after some time
+        const interval = setInterval(() => {
+            port.postMessage({ action: "ping" });
+        }, 10000); 
+
+        return () => clearInterval(interval);
     }, [])
 
     
