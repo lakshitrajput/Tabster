@@ -14,6 +14,7 @@
     "default_icon": "icon.png"
   },
   "permissions": ["storage","contextMenus","windows","tabs","activeTab","system.display"],
+  "incognito": "split",
   "options_page": "options.html",
   "background": {
     "service_worker": "background.js"

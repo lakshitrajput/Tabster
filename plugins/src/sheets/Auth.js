@@ -24,7 +24,7 @@ function Auth() {
     async function handleSubmit(e) {
         e.preventDefault();
         if (login === true && user.email.length > 4 && user.password.length > 5) {
-            const request = await fetch("http://localhost:4000/user/login", {
+            const request = await fetch("http://localhost:4000/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -34,15 +34,18 @@ function Auth() {
             });
 
             const response = await request.json();
-
+             
 
             if (response.success) {
-                localStorage.setItem("user", response.data.email);
-                navigate("/dashboard");
+                alert(response.message);
+                localStorage.setItem("authToken", response.token);
+                navigate("/success");
+            }else{
+                alert(response.message);
             }
         }
         else if (login === false && user.name.length > 4 && user.email.length > 4 && user.password.length > 4) {
-            const request = await fetch("http://localhost:4000/user/register", {
+            const request = await fetch("http://localhost:4000/api/auth/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -55,8 +58,7 @@ function Auth() {
 
 
             if (response.success) {
-                localStorage.setItem("user", response.data.email);
-                navigate("/dashboard");
+                alert(response.message +" ,Login to continue");
             }
 
         }
@@ -67,8 +69,8 @@ function Auth() {
     }
 
     useEffect(() => {
-        if (localStorage.getItem('user')) {
-            navigate("/dashboard")
+        if (localStorage.getItem('authToken')) {
+            navigate("/success")
         }
     }, [])
 
