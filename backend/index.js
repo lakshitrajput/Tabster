@@ -18,6 +18,7 @@ const server = app.listen(4000,()=>{
 DB();
 
 const authRouter = require('./Routes/authRoute');
-
+const tabRouter = require('./Routes/tabRoutes');
 
 app.use('/api/auth', authRouter);
+app.use('/api/tab', tabRouter)

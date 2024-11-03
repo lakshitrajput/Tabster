@@ -41,6 +41,14 @@ const Card = ({ tab, port }) => {
         port.postMessage(msg);
     }
 
+    const createBookmark = (tab) => {
+        const msg = {
+            action: 8,
+            tab: tab
+        }
+        port.postMessage(msg);
+    }
+
     return (
 
         <div className="card m-2 overflow-hidden d-flex justify-content-center" style={{ width: "180px", height: "180px" }}>
@@ -109,7 +117,7 @@ const Card = ({ tab, port }) => {
                 objectFit: "fit", 
                 alignItems: "center", position: "relative", top: "15px", left: "40px", 
                 marginTop: "30px", backgroundColor:"", cursor: "pointer"
-                }} src={(tab.favIconUrl) === "" ? "https://cdn-icons-png.flaticon.com/512/152/152759.png" : tab.favIconUrl}
+                }} src={(!tab.favIconUrl || tab.favIconUrl === "") ? "https://cdn-icons-png.flaticon.com/512/152/152759.png" : tab.favIconUrl}
                 className="card-img-top" alt="..." />
             <div className="card-body text-center">
                 <h5 className="card-title" style={{
@@ -205,6 +213,19 @@ const Card = ({ tab, port }) => {
                     </div>
             </div> */}
             </div>
+            <i className="fa-regular fa-bookmark" 
+                onClick={() => {
+                    createBookmark(tab)
+                }}
+                style={{
+                position: "absolute",
+                bottom: "10px",
+                right: "10px",
+                color: "#007bff",
+                fontSize: "16px",
+                cursor: "pointer"
+            }}></i>
+
         </div>
     )
 }

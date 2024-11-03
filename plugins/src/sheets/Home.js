@@ -9,19 +9,17 @@ export const Home = () => {
         getAllTabs();
     }, [])
 
-    useEffect(() => {
-        getAllTabs();
-    }, [tabs])
-
-
+    
     useEffect(() => {
         port.onMessage.addListener((res) => {
             const action = res.action;
             if(action == 0){
                 setTabs(res.data);
+                console.log(res.data);
             }
-            
-        })
+        });
+
+        return () => port.onMessage.removeListener();
     }, [port])
 
     // request to background.js for tabs

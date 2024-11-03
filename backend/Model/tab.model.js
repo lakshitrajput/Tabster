@@ -5,12 +5,20 @@ const tabSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    id: {
+        type: String,
+        required: true
+    },
     url: {
         type: String,
         required: true
     },
     favIconUrl: {
         type: String
+    },
+    isBookmarked: {
+        type: Boolean,
+        default: false
     }
 })
 

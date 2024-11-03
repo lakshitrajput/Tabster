@@ -1,7 +1,3 @@
-// TODO: background script
-// chrome.runtime.onInstalled.addListener(() => {
-// }
-
 // to get the popup in the center
 chrome.action.onClicked.addListener(function () {
     chrome.system.display.getInfo(function (displays) {
@@ -88,43 +84,43 @@ chrome.runtime.onConnect.addListener((port) => {
     
     const closeTab = (action, tabId) => {
         chrome.tabs.remove(tabId, () => {
-            sendAllTabs(1);
+            sendAllTabs(0);
         });
     }
 
     const pinTab = (action, tabId) => {
         chrome.tabs.update(tabId, { pinned: true }, () => {
-            sendAllTabs(1);
+            sendAllTabs(0);
         });
     }
 
     const unPinTab = (action, tabId) => {
         chrome.tabs.update(tabId, { pinned: false }, () => {
-            sendAllTabs(1);
+            sendAllTabs(0);
         });
     }
 
     const duplicateTab = (action, tabId) => {
         chrome.tabs.duplicate(tabId, () => {
-            sendAllTabs(1);
+            sendAllTabs(0);
         })
     }
 
     const createNewTab = (action) => {
         chrome.tabs.create({}, () => {
-            sendAllTabs(1);
+            sendAllTabs(0);
         })
     }
 
     const setActiveTab = (action, tabId) => {
         chrome.tabs.update(tabId, { active: true }, () => {
-            sendAllTabs(1);
+            sendAllTabs(0);
         })
     }
 
     const createIncognitoTab = (action) => {
         chrome.windows.create({ incognito: true, url: 'about:blank' }, (window) => {
-            sendAllTabs(1);
+            sendAllTabs(0);
         });
     }
 
