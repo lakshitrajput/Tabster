@@ -76,19 +76,19 @@ const Card = ({ tab, port }) => {
                     color: "#555"
                 }}></i>
 
-                <div class=" d-flex justify-content-center" >
-                    <div class="dropdown dropdown-hover">
+                <div className=" d-flex justify-content-center" >
+                    <div className="dropdown dropdown-hover">
                         <button data-mdb-button-init data-mdb-ripple-init data-mdb-dropdown-init
-                            class="border-0 dropdown-toggle" type="button" id="dropdownMenuButton"
+                            className="border-0 dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-mdb-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-layer-group icon" ></i>
+                            <i className="fa-solid fa-layer-group icon" ></i>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-hover" aria-labelledby="dropdownMenuButton">
+                        <ul className="dropdown-menu dropdown-menu-hover" aria-labelledby="dropdownMenuButton">
                             <li>
-                                <div class="dropdown-item " style={{cursor:"pointer"}} >New group</div>
+                                <div className="dropdown-item " style={{cursor:"pointer"}} >New group</div>
                             </li>
                             <li>
-                                <div class="dropdown-item " style={{ cursor: "pointer" }}>Add to a group</div>
+                                <div className="dropdown-item " style={{ cursor: "pointer" }}>Add to a group</div>
                             </li>
                             
                         </ul>
@@ -147,13 +147,6 @@ const Card = ({ tab, port }) => {
                 }}>
 
                     {/* <i class="fa-solid fa-bookmark"></i>   if bookmarked */}
-                    <div className="fa-regular fa-bookmark icon-red" onClick={() => console.log("add bookmark")}
-                        style={{
-                            cursor: "pointer",
-                            width: "30px",
-                            height: "20px",
-                            color: "#555"
-                        }}></div>
                 </div>
             </div>
             {/* <div className='card-hover'> */}
@@ -178,9 +171,10 @@ const Card = ({ tab, port }) => {
             {/* </div> */}
             
             </div>
-            <i className="fa-regular fa-bookmark" 
+            <i className="fa-regular fa-bookmark icon-red" 
                 onClick={() => {
-                    createBookmark(tab)
+                    // createBookmark(tab)
+                    console.log('creating bookmark');
                 }}
                 style={{
                 position: "absolute",
