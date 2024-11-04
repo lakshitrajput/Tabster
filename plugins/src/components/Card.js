@@ -55,9 +55,9 @@ const Card = ({ tab, port }) => {
 
         <div className="card m-2  d-flex justify-content-center" style={{ width: "180px", height: "180px" }}>
             <div style={{
-                backgroundColor: "#f0f0f0",  
-                height: "30px",              
-                width: "100%",               
+                backgroundColor: "#f0f0f0",
+                height: "30px",
+                width: "100%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
@@ -65,10 +65,10 @@ const Card = ({ tab, port }) => {
                 position: "absolute",
                 top: 0,
                 left: 0,
-                zIndex: 1 
+                zIndex: 5
             }}>
-            
-                <i className="fas fa-arrows-alt icon" style={{
+
+                <i className="fas fa-arrows-alt icon" data-toggle="tooltip" data-placement="top" title="Drag" style={{
                     // position: "absolute",
                     // top: "5px",
                     // left: "5px",
@@ -76,7 +76,7 @@ const Card = ({ tab, port }) => {
                     color: "#555"
                 }}></i>
 
-                <div className=" d-flex justify-content-center" >
+                <div className="card-menu d-flex justify-content-center" style={{zIndex:2}}>
                     <div className="dropdown dropdown-hover">
                         <button data-mdb-button-init data-mdb-ripple-init data-mdb-dropdown-init
                             className="border-0 dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -85,58 +85,84 @@ const Card = ({ tab, port }) => {
                         </button>
                         <ul className="dropdown-menu dropdown-menu-hover" aria-labelledby="dropdownMenuButton">
                             <li>
-                                <div className="dropdown-item " style={{cursor:"pointer"}} >New group</div>
+                                <div className="dropdown-item " style={{ cursor: "pointer" }} >New group</div>
                             </li>
                             <li>
-                                <div className="dropdown-item " style={{ cursor: "pointer" }}>Add to a group</div>
+                                <a class="dropdown-item" href="#">
+                                    Add to a group &raquo;
+                                </a>
+                                <ul class="dropdown-menu dropdown-submenu" style={{zIndex:400}}>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Submenu item 1</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Submenu item 2</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Submenu item 3 &raquo; </a>
+                                        <ul class="dropdown-menu dropdown-submenu">
+                                            <li>
+                                                <a class="dropdown-item" href="#">Multi level 1</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Multi level 2</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Submenu item 4</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Submenu item 5</a>
+                                    </li>
+                                </ul>
                             </li>
-                            
                         </ul>
                     </div>
                 </div>
 
 
-        
-                
-                <i className="fa-solid fa-clone icon" onClick={() => {duplicateTab(tab?.id) }} 
-                style={{
-                    // position: "absolute",
-                    // top: "5px",
-                    // right: "48px",
-                    cursor: "pointer",
-                    color: "#555"
-                }}></i>
-                {tab?.pinned ? <i className="fa-solid fa-thumbtack-slash icon" onClick={() => {unPinTab(tab?.id) }}
-                style={{
-                    // position: "absolute",
-                    // top: "5px",
-                    // right: "23px",
-                    cursor: "pointer",
-                    color: "#555"
-                }}></i> : 
-                    <i className="fa-solid fa-thumbtack icon" onClick={() => {pinTab(tab?.id) }}
-                style={{
-                    // position: "absolute",
-                    // top: "5px",
-                    // right: "23px",
-                    cursor: "pointer",
-                    color: "#555"
-                }}></i>
+
+
+                <i className="fa-solid fa-clone icon" onClick={() => { duplicateTab(tab?.id) }}
+                    style={{
+                        // position: "absolute",
+                        // top: "5px",
+                        // right: "48px",
+                        cursor: "pointer",
+                        color: "#555"
+                    }}></i>
+                {tab?.pinned ? <i className="fa-solid fa-thumbtack-slash icon" onClick={() => { unPinTab(tab?.id) }}
+                    style={{
+                        // position: "absolute",
+                        // top: "5px",
+                        // right: "23px",
+                        cursor: "pointer",
+                        color: "#555"
+                    }}></i> :
+                    <i className="fa-solid fa-thumbtack icon" onClick={() => { pinTab(tab?.id) }}
+                        style={{
+                            // position: "absolute",
+                            // top: "5px",
+                            // right: "23px",
+                            cursor: "pointer",
+                            color: "#555"
+                        }}></i>
                 }
-                <i className="fas fa-times icon-red" onClick={() => {closeTab(tab?.id) }} 
-                style={{
-                    // position: "absolute",
-                    // top: "5px",
-                    // right: "5px",
-                    cursor: "pointer",
-                    color: "#555"
-                }}></i>
+                <i className="fas fa-times icon-red" onClick={() => { closeTab(tab?.id) }}
+                    style={{
+                        // position: "absolute",
+                        // top: "5px",
+                        // right: "5px",
+                        cursor: "pointer",
+                        color: "#555"
+                    }}></i>
             </div>
             <div className='cardFooter'>
                 <div style={{
-                    position:"absolute",
-                    top:"30px",
-                    right:"-20px",
+                    position: "absolute",
+                    top: "30px",
+                    right: "-20px",
                     height: "30px",
                     width: "100%",
                     display: "flex",
@@ -153,11 +179,12 @@ const Card = ({ tab, port }) => {
             <img onClick={() => {
                 setActiveTab(tab?.id)
             }}
-                style={{ width: "90px", 
-                height: "90px", 
-                objectFit: "fit", 
-                alignItems: "center", position: "relative", top: "15px", left: "40px", 
-                marginTop: "30px", backgroundColor:"", cursor: "pointer"
+                style={{
+                    width: "90px",
+                    height: "90px",
+                    objectFit: "fit",
+                    alignItems: "center", position: "relative", top: "15px", left: "40px",
+                    marginTop: "30px", backgroundColor: "", cursor: "pointer"
                 }} src={(!tab.favIconUrl || tab.favIconUrl === "") ? "https://cdn-icons-png.flaticon.com/512/152/152759.png" : tab.favIconUrl}
                 className="card-img-top" alt="..." />
             <div className="card-body text-center">
@@ -168,22 +195,22 @@ const Card = ({ tab, port }) => {
                     textOverflow: "ellipsis",
                     maxWidth: "150px"
                 }} >{tab.title}</h5>
-            {/* </div> */}
-            
+                {/* </div> */}
+
             </div>
-            <i className="fa-regular fa-bookmark icon-red" 
+            <i className="fa-regular fa-bookmark icon-red"
                 onClick={() => {
                     // createBookmark(tab)
                     console.log('creating bookmark');
                 }}
                 style={{
-                position: "absolute",
-                bottom: "10px",
-                right: "10px",
-                color: "#007bff",
-                fontSize: "16px",
-                cursor: "pointer"
-            }}></i>
+                    position: "absolute",
+                    bottom: "10px",
+                    right: "10px",
+                    color: "#007bff",
+                    fontSize: "16px",
+                    cursor: "pointer"
+                }}></i>
 
         </div>
     )
