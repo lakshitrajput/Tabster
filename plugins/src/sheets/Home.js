@@ -8,21 +8,26 @@ export const Home = () => {
 
     useEffect(() => {
         getAllTabs();
+
+        // to prevent the port becoming inactive after some time
+        const interval = setInterval(() => {
+            port.postMessage({ action: "ping" });
+        }, 10000); 
+
+        return () => clearInterval(interval);
     }, [])
 
-    useEffect(() => {
-        getAllTabs();
-    }, [tabs])
-
-
+    
     useEffect(() => {
         port.onMessage.addListener((res) => {
             const action = res.action;
             if(action == 0){
                 setTabs(res.data);
+                console.log(res.data);
             }
-            
-        })
+        });
+
+        return () => port.onMessage.removeListener();
     }, [port])
 
     // request to background.js for tabs
