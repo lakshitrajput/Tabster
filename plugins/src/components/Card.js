@@ -3,6 +3,7 @@ import React from 'react'
 const Card = ({ tab, port }) => {
 
     const [showMenu, setShowMenu] = React.useState(false);
+    const [color,setColor] = React.useState("#f0f0f0");
     // req to bg to close tab with id: id
     const closeTab = (id) => {
         const msg = {
@@ -51,8 +52,45 @@ const Card = ({ tab, port }) => {
         port.postMessage(msg);
     }
 
-    return (
+    
 
+
+    return (
+        <>
+            {showMenu ? 
+            <div className="card m-2 d-flex justify-content-center" style={{ width: "180px", height: "180px" }}>
+                    <div style={{
+                        backgroundColor: "#f0f0f0",
+                        height: "30px",
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        padding: "0 8px",
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        zIndex: 5
+                    }}>
+                        <p style={{ fontSize: "10px" ,position:"absolute",top:"5px",left:"5px"}}>{tab.title}</p>
+                        <i className="fas fa-times icon-red" onClick={() =>setShowMenu(false)}
+                            style={{
+                                position: "absolute",
+                                top: "5px",
+                                right: "5px",
+                                cursor: "pointer",
+                                color: "#555"
+                            }}></i>
+                    </div>
+                    <div className='w-100 d-flex flex-column justify-content-center align-items-center p-3' style={{marginTop:"28px"}}>
+        
+                    <input type="text" className="form-control" placeholder="Name this group" aria-label="Username" aria-describedby="basic-addon1" />
+                    <input type="color" className="m-auto  
+            form-control form-control-color"
+                        id="GFG_Color" value={color} onChange={(e) => setColor(e.target.value)}></input>
+                        <button type='submit' className='button-85 mt-2' style={{width:"100px",height:"10px"}}>Save</button>
+                    </div>
+            </div>: 
         <div className="card m-2  d-flex justify-content-center" style={{ width: "180px", height: "180px" }}>
             <div style={{
                 backgroundColor: "#f0f0f0",
@@ -85,35 +123,35 @@ const Card = ({ tab, port }) => {
                         </button>
                         <ul className="dropdown-menu dropdown-menu-hover" aria-labelledby="dropdownMenuButton">
                             <li>
-                                <div className="dropdown-item " style={{ cursor: "pointer" }} >New group</div>
+                                <div className="dropdown-item " style={{ cursor: "pointer" }} onClick={()=>setShowMenu(true)}>New group</div>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">
+                                <a className="dropdown-item" href="#">
                                     Add to a group &raquo;
                                 </a>
-                                <ul class="dropdown-menu dropdown-submenu" style={{zIndex:400}}>
+                                <ul className="dropdown-menu dropdown-submenu" style={{zIndex:400}}>
                                     <li>
-                                        <a class="dropdown-item" href="#">Submenu item 1</a>
+                                        <a className="dropdown-item" href="#">Submenu item 1</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">Submenu item 2</a>
+                                        <a className="dropdown-item" href="#">Submenu item 2</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">Submenu item 3 &raquo; </a>
-                                        <ul class="dropdown-menu dropdown-submenu">
+                                        <a className="dropdown-item" href="#">Submenu item 3 &raquo; </a>
+                                        <ul className="dropdown-menu dropdown-submenu">
                                             <li>
-                                                <a class="dropdown-item" href="#">Multi level 1</a>
+                                                <a className="dropdown-item" href="#">Multi level 1</a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="#">Multi level 2</a>
+                                                <a className="dropdown-item" href="#">Multi level 2</a>
                                             </li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">Submenu item 4</a>
+                                        <a className="dropdown-item" href="#">Submenu item 4</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">Submenu item 5</a>
+                                        <a className="dropdown-item" href="#">Submenu item 5</a>
                                     </li>
                                 </ul>
                             </li>
@@ -172,7 +210,7 @@ const Card = ({ tab, port }) => {
                     padding: "8px 8px",
                 }}>
 
-                    {/* <i class="fa-solid fa-bookmark"></i>   if bookmarked */}
+                    {/* <i className="fa-solid fa-bookmark"></i>   if bookmarked */}
                 </div>
             </div>
             {/* <div className='card-hover'> */}
@@ -213,6 +251,8 @@ const Card = ({ tab, port }) => {
                 }}></i>
 
         </div>
+        }
+        </>
     )
 }
 
