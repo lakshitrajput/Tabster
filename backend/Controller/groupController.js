@@ -29,6 +29,8 @@ async function createGroup(req, res){
             colour: color,
             tabs: [existTab._id]
         })
+        const populatedGroup = await group.populate('tabs');
+        
 
         await userModel.updateOne(
             { _id: userId },
@@ -38,7 +40,7 @@ async function createGroup(req, res){
         res.status(201).json({
             success:true,
             msg: "group created successfully",
-            group: group
+            group: populatedGroup
         })
 
     } catch(error){
@@ -51,12 +53,18 @@ async function createGroup(req, res){
 // get function to get all created groups of a user
 async function getGroups(req, res){
     try{
-        const user = req.user;
+        const user = await userModel.findById(req.user._id).populate({
+            path: 'groups',
+            populate: {
+                path: 'tabs',
+            }
+        });
+        const groups = user.groups;
 
         res.status(200).json({
             success:true,
             msg: "groups fetched successfully",
-            groups: user.groups
+            groups: groups
         })
 
     } catch(error){
