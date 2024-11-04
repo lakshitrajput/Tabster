@@ -36,6 +36,7 @@ async function postBookmark(req, res){
         // save changes to the user
         await user.save();
         res.status(200).json({
+            success:true,
             msg: "Tab bookmarked/unbookmarked successfullly",
             user: user,
             tabs: user.tabs

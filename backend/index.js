@@ -19,6 +19,9 @@ DB();
 
 const authRouter = require('./Routes/authRoute');
 const tabRouter = require('./Routes/tabRoutes');
+const groupRouter = require('./Routes/groupRoutes');
 
 app.use('/api/auth', authRouter);
-app.use('/api/tab', tabRouter)
+app.use('/api/tab', tabRouter);
+app.use('/api/group', groupRouter);
+
