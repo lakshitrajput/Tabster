@@ -74,8 +74,13 @@ export const Home = () => {
                     </div>
             </div>
             <div>
-                <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>
+            <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>
+                        <GroupCard color="red" name="My Tabssssssssssssssss" />
                         <GroupCard color="red" name="My Tabs" />
+                        <GroupCard color="red" name="My Tabs" />
+                        <GroupCard color="red" name="My Tabs" />
+            </div>
+                <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>
                     {tabs.map((tab) => (
                         (tab.title != 'tabster') &&
                             <Card 

@@ -2,33 +2,12 @@ import React from 'react'
 
 export default function GroupCard({color,name}) {
 
-
+   const modifiedName=name.substring(0,Math.min(name.length,10))+(name.length>10?"...":"")
+   
 
   return (
-      <div className="card m-2  d-flex justify-content-center align-items-center text-light" style={{ width: "180px", height: "180px",backgroundColor:color }}>
-          <div style={{
-              backgroundColor: "#f0f0f0",
-              height: "30px",
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "0 8px",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              zIndex: 1
-          }}>
-              <i className="fas fa-times icon-red" onClick={() => { closeTab(tab?.id) }}
-                  style={{
-                      // position: "absolute",
-                      // top: "5px",
-                      // right: "5px",
-                      cursor: "pointer",
-                      color: "#555"
-                  }}></i>
-          </div>
-          <h1>{name}</h1>
+      <div className="card m-2 d-flex justify-content-center align-items-center text-light group-hover" style={{ width: "70px", height: "20px",backgroundColor:color,cursor:"pointer" }}>
+          <p style={{ fontSize: "10px" ,marginTop:"10px",fontFamily:"'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"}}>{modifiedName}</p>
           </div>
   )
 }

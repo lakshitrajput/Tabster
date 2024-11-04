@@ -227,3 +227,8 @@ ul li{
 .dropdown-menu>li:hover>.dropdown-submenu {
   display: block;
 }
+
+.group-hover:hover{
+  /* box-shadow: 2px 2px 2px 2px rgba(60, 60, 60, 0.973); */
+  opacity: 0.5;
+}
