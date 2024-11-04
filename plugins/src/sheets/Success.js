@@ -6,8 +6,10 @@ function Success() {
     const navigate = useNavigate();
 
 
-
-
+   const handleLogout=()=>{
+    localStorage.removeItem('authToken');
+    navigate('/');
+   }
     
     useEffect(() => {
         if (!localStorage.getItem('authToken')) {
@@ -36,7 +38,7 @@ function Success() {
                     <div className="d-flex flex-column align-items-center justify-content-center mt-5">
                     <h5 className=''>You are all set to go</h5>
                     <p className="lead fw-normal mb-0 me-3 text-secondary">You can use Tabster by going to the chrome extension and clicking on "Tabster"</p>
-                    <div className='button-85 mt-5'>Logout</div>
+                    <div className='button-85 mt-5' onClick={handleLogout}>Logout</div>
                     </div>
                 </div>
 
