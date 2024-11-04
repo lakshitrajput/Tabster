@@ -5,12 +5,14 @@ import './popup.css'
 import { Home } from '../sheets/Home'
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { Group } from '../sheets/Group';
 
 
 const App = () => (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+      <Route path="/group/:id" element={<Group/>} />
       </Routes>
     </Router>
   );

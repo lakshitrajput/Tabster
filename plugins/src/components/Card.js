@@ -1,10 +1,14 @@
 import React from 'react'
 
-const Card = ({ tab, port }) => {
+const Card = ({ tab, port ,groups}) => {
 
     const [showMenu, setShowMenu] = React.useState(false);
     const [color,setColor] = React.useState("#f0f0f0");
     const [groupName, setGroupName] = React.useState('');
+
+    
+    const filteredGroups = groups.filter(group =>!group.tabs.some(ele => ele.id === tab.id));
+    
 
     // req to bg to close tab with id: id
     const closeTab = (id) => {
@@ -80,7 +84,7 @@ const Card = ({ tab, port }) => {
             
 
             if (response.success) {
-                console.log(response)
+                window.location.reload();
             } else {
                 throw new Error(`${response.msg}`);
             }
@@ -171,29 +175,7 @@ const Card = ({ tab, port }) => {
                                     Add to a group &raquo;
                                 </a>
                                 <ul className="dropdown-menu dropdown-submenu" style={{zIndex:400}}>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Submenu item 1</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Submenu item 2</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Submenu item 3 &raquo; </a>
-                                        <ul className="dropdown-menu dropdown-submenu">
-                                            <li>
-                                                <a className="dropdown-item" href="#">Multi level 1</a>
-                                            </li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">Multi level 2</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Submenu item 4</a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item" href="#">Submenu item 5</a>
-                                    </li>
+                                {filteredGroups.map((group) => (<li key={group._id}><a className="dropdown-item" href="#">{group.name}</a></li>))}                                    
                                 </ul>
                             </li>
                         </ul>

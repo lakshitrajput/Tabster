@@ -4,10 +4,25 @@ import GroupCard from '../components/GroupCard';
 
 export const Home = () => {
     const [tabs, setTabs] = useState([]);
+    const [groups, setGroups] = useState([]);
     const port = chrome.runtime.connect({ name: "popup" });
+
+    const getAllGroups = async() => {
+        const authToken = localStorage.getItem('authToken');
+        const res = await fetch('http://localhost:4000/api/group', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            },
+        });
+       const response=await res.json();
+      setGroups(response.groups);        
+    }
+
 
     useEffect(() => {
         getAllTabs();
+        getAllGroups();
 
         // to prevent the port becoming inactive after some time
         const interval = setInterval(() => {
@@ -23,7 +38,6 @@ export const Home = () => {
             const action = res.action;
             if(action == 0){
                 setTabs(res.data);
-                console.log(res.data);
             }
         });
 
@@ -75,10 +89,9 @@ export const Home = () => {
             </div>
             <div>
             <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>
-                        <GroupCard color="red" name="My Tabssssssssssssssss" />
-                        <GroupCard color="red" name="My Tabs" />
-                        <GroupCard color="red" name="My Tabs" />
-                        <GroupCard color="red" name="My Tabs" />
+            {groups.map((group) => (
+                <GroupCard color={group.colour} name={group.name} key={group._id} id={group._id}/>
+            ))}
             </div>
                 <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>
                     {tabs.map((tab) => (
@@ -87,6 +100,7 @@ export const Home = () => {
                                 key={tab.id}
                                 tab={tab}
                                 port={port}
+                                groups={groups}
                             />
                     ))}
                 </div>
