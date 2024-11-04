@@ -3,7 +3,6 @@ import React from 'react'
 export default function GroupCard({color,name}) {
 
 
-
   return (
       <div className="card m-2  d-flex justify-content-center align-items-center text-light" style={{ width: "180px", height: "180px",backgroundColor:color }}>
           <div style={{

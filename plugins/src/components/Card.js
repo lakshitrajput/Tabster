@@ -4,6 +4,8 @@ const Card = ({ tab, port }) => {
 
     const [showMenu, setShowMenu] = React.useState(false);
     const [color,setColor] = React.useState("#f0f0f0");
+    const [groupName, setGroupName] = React.useState('');
+
     // req to bg to close tab with id: id
     const closeTab = (id) => {
         const msg = {
@@ -52,7 +54,44 @@ const Card = ({ tab, port }) => {
         port.postMessage(msg);
     }
 
-    
+    const handleSave = async () => {
+        try {
+            const authToken = localStorage.getItem('authToken');
+            if (!authToken) {
+                console.error('Auth token not found');
+                return;
+            }
+
+            const res = await fetch('http://localhost:4000/api/group', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                },
+                body: JSON.stringify({
+                    name: groupName,
+                    color: color,
+                    tab: tab
+                }),
+            });
+            const response = await res.json();
+
+            // console.log(response);
+            
+
+            if (response.success) {
+                console.log(response)
+            } else {
+                throw new Error(`${response.msg}`);
+            }
+            setShowMenu(false);
+
+        } catch (error) {
+            // toast.error('Failed to save group', { position: toast.POSITION.TOP_LEFT });
+            console.log(error);
+            setShowMenu(false);
+        }
+    }
 
 
     return (
@@ -84,11 +123,13 @@ const Card = ({ tab, port }) => {
                     </div>
                     <div className='w-100 d-flex flex-column justify-content-center align-items-center p-3' style={{marginTop:"28px"}}>
         
-                    <input type="text" className="form-control" placeholder="Name this group" aria-label="Username" aria-describedby="basic-addon1" />
+                    <input type="text" className="form-control" placeholder="Name this group" aria-label="Username" aria-describedby="basic-addon1" 
+                    onChange={(e) => setGroupName(e.target.value)}
+                    />
                     <input type="color" className="m-auto  
             form-control form-control-color"
                         id="GFG_Color" value={color} onChange={(e) => setColor(e.target.value)}></input>
-                        <button type='submit' className='button-85 mt-2' style={{width:"100px",height:"10px"}}>Save</button>
+                        <button type='submit' className='button-85 mt-2' style={{width:"100px",height:"10px"}} onClick={() => handleSave()} >Save</button>
                     </div>
             </div>: 
         <div className="card m-2  d-flex justify-content-center" style={{ width: "180px", height: "180px" }}>
