@@ -37,7 +37,7 @@ function Auth() {
              
 
             if (response.success) {
-                alert(response.message);
+                alert("Login Successful");
                 localStorage.setItem("authToken", response.token);
                 navigate("/success");
             }else{

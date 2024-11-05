@@ -8,6 +8,7 @@ const Card = ({ tab, port ,groups}) => {
 
     
     const filteredGroups = groups.filter(group =>!group.tabs.some(ele => ele.id === tab.id));
+    const modifiedName = tab.title.substring(0, Math.min(tab.title.length, 20)) + (tab.title.length > 20 ? "..." : "")
     
 
     // req to bg to close tab with id: id
@@ -140,7 +141,7 @@ const Card = ({ tab, port ,groups}) => {
                         left: 0,
                         zIndex: 5
                     }}>
-                        <p style={{ fontSize: "10px" ,position:"absolute",top:"5px",left:"5px"}}>{tab.title}</p>
+                        <p style={{ fontSize: "10px", position: "absolute", top: "5px", left: "5px" }}>{modifiedName}</p>
                         <i className="fas fa-times icon-red" onClick={() =>setShowMenu(false)}
                             style={{
                                 position: "absolute",

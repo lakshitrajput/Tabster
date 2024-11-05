@@ -29,13 +29,13 @@ async function loginUser(req, res) {
             else {
                 res.json({
                     success: false,
-                     meassage: "Invalid Password" });
+                    message: "Invalid Password" });
             }
         }
         else {
             res.json({
                 success: false,
-                meassage: "Invalid username" });
+                message: "Invalid username" });
         }
     }
 
