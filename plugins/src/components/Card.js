@@ -97,6 +97,31 @@ const Card = ({ tab, port ,groups}) => {
         }
     }
 
+    const handleAddGroup = async(group) => {
+        try{
+            const authToken = localStorage.getItem('authToken');
+            const res = await fetch('http://localhost:4000/api/group', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                },
+                body: JSON.stringify({
+                    tab: tab,
+                    group: group
+                }),
+            });
+            const response = await res.json();
+
+            if (response.success) {
+                console.log('added to group');
+            } else {
+                throw new Error(`${response.msg}`);
+            }
+        } catch(error){
+            console.log(error);
+        }
+    }
 
     return (
         <>
@@ -175,7 +200,7 @@ const Card = ({ tab, port ,groups}) => {
                                     Add to a group &raquo;
                                 </a>
                                 <ul className="dropdown-menu dropdown-submenu" style={{zIndex:400}}>
-                                {filteredGroups.map((group) => (<li key={group._id}><a className="dropdown-item" href="#">{group.name}</a></li>))}                                    
+                                {filteredGroups.map((group) => (<li key={group._id}><a className="dropdown-item" href="#" onClick={() => handleAddGroup(group)} >{group.name}</a></li>))}                                    
                                 </ul>
                             </li>
                         </ul>

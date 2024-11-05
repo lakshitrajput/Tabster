@@ -75,5 +75,38 @@ async function getGroups(req, res){
 
 }
 
+async function addToGroup(req, res){
+    try{
+        const { tab, group } = req.body;
 
-module.exports = { createGroup, getGroups };
+        let existTab = await tabModel.findOne({ id: tab.id });
+        if(!existTab){
+                existTab = await tabModel.create({
+                title: tab.title,
+                id: tab.id,
+                url: tab.url,
+                favIconUrl: tab.favIconUrl                
+            })
+        }
+
+        const gp = await groupModel.findOneAndUpdate(
+            { _id: group._id },
+            { $addToSet: { tabs: existTab._id } },
+            { new: true }  
+        );
+    
+
+        res.status(200).json({
+            success: true,
+            msg: "Added to group successfully",
+            group: gp
+        })
+
+    } catch(error){
+        res.status(400).json({
+            msg: ""+error
+        })
+    }
+}
+
+module.exports = { createGroup, getGroups, addToGroup };

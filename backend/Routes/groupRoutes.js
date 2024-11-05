@@ -1,5 +1,5 @@
 const express = require('express');
-const { createGroup, getGroups } = require('../Controller/groupController');
+const { createGroup, getGroups, addToGroup } = require('../Controller/groupController');
 const { protect } = require('../middleware/authMiddleware');
 
 const groupRouter = express.Router();
@@ -7,6 +7,7 @@ const groupRouter = express.Router();
 groupRouter.route('/')
 .post(protect, createGroup)
 .get(protect, getGroups)
+.put(protect, addToGroup)
 
 
 module.exports = groupRouter;

@@ -49,7 +49,7 @@ export const Group = () => {
     //     return () => port.onMessage.removeListener();
     // }, [port])
 
-    // request to background.js for tabs
+    // // request to background.js for tabs
     // const getAllTabs = () => {
     //     const msg = {
     //         action: 0
@@ -57,19 +57,6 @@ export const Group = () => {
     //     port.postMessage(msg);
     // }
 
-    // const createNewTab = () => {
-    //     const msg = {
-    //         action: 5
-    //     }
-    //     port.postMessage(msg);
-    // }
-
-    // const createIncognitoTab = () => {
-    //     const msg = {
-    //         action: 7
-    //     }
-    //     port.postMessage(msg);
-    // }
 
 
     return (

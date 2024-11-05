@@ -6,7 +6,7 @@ const tabSchema = new mongoose.Schema({
         required: true
     },
     id: {
-        type: String,
+        type: Number,
         required: true
     },
     url: {
