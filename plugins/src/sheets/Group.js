@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Card from '../components/Card'
+import GroupTabCard from '../components/GroupTabCard';
 import { useParams } from 'react-router-dom';
 
 export const Group = () => {
@@ -30,11 +30,11 @@ export const Group = () => {
     useEffect(() => {
         getAllGroups();
         // to prevent the port becoming inactive after some time
-        // const interval = setInterval(() => {
-        //     port.postMessage({ action: "ping" });
-        // }, 10000);
+        const interval = setInterval(() => {
+            port.postMessage({ action: "ping" });
+        }, 10000);
 
-        // return () => clearInterval(interval);
+        return () => clearInterval(interval);
     }, [])
 
 
@@ -86,7 +86,7 @@ export const Group = () => {
                     <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>
                         {tabs.map((tab) => (
                             (tab.title != 'tabster') &&
-                            <Card
+                            <GroupTabCard
                                 key={tab.id}
                                 tab={tab}
                                 port={port}

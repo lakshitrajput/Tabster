@@ -69,6 +69,10 @@ chrome.runtime.onConnect.addListener((port) => {
         else if(action == 9){
             openInIncognito(action, msg.url);
         }
+        else if(action == 10){
+            // to open/switch a tab inside a group
+            openGroupTab(action, msg.tab);
+        }
     });
 
 
@@ -132,6 +136,37 @@ chrome.runtime.onConnect.addListener((port) => {
             url: taburl,
             incognito: true
         })    
+    }
+
+    const openGroupTab = (action, tab) => {
+        chrome.tabs.query({}, (tabs) => {
+            const targetTab = tabs.find(elm => elm.id === tab.id);
+    
+            if (targetTab) {
+                // If the tab with the specified ID exists, activate it
+                chrome.tabs.update(tab.id, { active: true });
+            } else {
+                // If the tab does not exist, open a new one with the specified URL
+                chrome.tabs.create({ url: tab.url }, (newTab) => {
+                    fetch('http://localhost:4000/api/tab', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            tabId: tab.id,
+                            newTabId: newTab.id
+                        })
+                    })
+                    .then(response => response.json())
+                    .catch(error => {
+                        console.error('Error with API request:', error);
+                    });
+
+                });
+            }
+        });
+
     }
 
 });

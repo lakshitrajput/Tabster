@@ -109,6 +109,25 @@ async function addToGroup(req, res){
     }
 }
 
+async function removeTabFromGroup(req, res){
+    try{
+        const { tabId, groupId } = req.body;
+        await groupModel.findOneAndUpdate({ _id: groupId }, {
+            $pull: { tabs: tabId }
+        })
+        res.status(200).json({
+            success:true,
+            msg: "tab removed successfully"
+        })
+
+    } catch(error){
+        res.status(500).json({
+            msg: ""+error
+        })
+    }
+
+}
+
 async function ungroup(req, res){
     try{
         const { groupId } = req.body;
@@ -129,4 +148,4 @@ async function ungroup(req, res){
     }
 }
 
-module.exports = { createGroup, getGroups, addToGroup, ungroup };
+module.exports = { createGroup, getGroups, addToGroup, ungroup, removeTabFromGroup };

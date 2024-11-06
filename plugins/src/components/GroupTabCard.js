@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-const Card = ({ tab, port ,groups}) => {
+const GroupTabCard = ({ tab, port ,groups}) => {
 
     const [showMenu, setShowMenu] = React.useState(false);
     const [color,setColor] = React.useState("#f0f0f0");
@@ -46,10 +46,10 @@ const Card = ({ tab, port ,groups}) => {
         port.postMessage(msg);
     }
 
-    const setActiveTab = (id) => {
+    const setActiveTab = (tab) => {
         const msg = {
-            action: 6,
-            id: id
+            action: 10,
+            tab: tab
         }
         port.postMessage(msg);
     }
@@ -281,7 +281,7 @@ const Card = ({ tab, port ,groups}) => {
             </div>
             {/* <div className='card-hover'> */}
             <img onClick={() => {
-                setActiveTab(tab?.id)
+                setActiveTab(tab)
             }}
                 style={{
                     width: "90px",
@@ -323,4 +323,4 @@ const Card = ({ tab, port ,groups}) => {
     )
 }
 
-export default Card
+export default GroupTabCard
