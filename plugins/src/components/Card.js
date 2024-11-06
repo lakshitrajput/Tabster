@@ -61,6 +61,14 @@ const Card = ({ tab, port ,groups}) => {
         port.postMessage(msg);
     }
 
+    const openInIncognito = (url) => {
+        const msg = {
+            action: 9,
+            url: url
+        }
+        port.postMessage(msg);
+    }
+
     const handleSave = async () => {
         try {
             const authToken = localStorage.getItem('authToken');
@@ -183,13 +191,15 @@ const Card = ({ tab, port ,groups}) => {
                 zIndex: 5
             }}>
 
-                <i className="fas fa-arrows-alt icon" data-toggle="tooltip" data-placement="top" title="Drag" style={{
+                <i className="fa fa-user-secret" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Drag" style={{
                     // position: "absolute",
                     // top: "5px",
                     // left: "5px",
                     cursor: "pointer",
                     color: "#555"
-                }}></i>
+                }}
+                onClick={() => openInIncognito(tab?.url)}
+                ></i>
 
                 <div className="card-menu d-flex justify-content-center" style={{zIndex:2}}>
                     <div className="dropdown dropdown-hover">
