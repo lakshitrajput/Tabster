@@ -109,4 +109,24 @@ async function addToGroup(req, res){
     }
 }
 
-module.exports = { createGroup, getGroups, addToGroup };
+async function ungroup(req, res){
+    try{
+        const { groupId } = req.body;
+        const user = req.user;
+        await userModel.findOneAndUpdate({ _id:user._id  }, {
+            $pull: { groups: groupId }
+        });
+
+        await groupModel.deleteOne({ _id: groupId });
+        res.status(200).json({
+            success:true,
+            msg: "group ungrouped successfully"
+        });
+    } catch(eror){
+        res.status(500).json({
+            msg: ""+error
+        })
+    }
+}
+
+module.exports = { createGroup, getGroups, addToGroup, ungroup };
