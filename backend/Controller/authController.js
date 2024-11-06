@@ -21,7 +21,7 @@ async function loginUser(req, res) {
               
                 res.status(201).json({
                     success: true,
-                    meassage: "Login successfully",
+                    message: "Login successfully",
                     data: user,
                     token: token
                 })
@@ -50,6 +50,14 @@ async function register(req, res) {
     }
     try {
         const body = req.body;
+        const userExit=await userModel.findOne({email: body.email});
+        if(userExit){
+            return res.status(400).json({
+                success: false,
+                message: "User already exists"
+            });
+        }
+        
         const user = await userModel.create(body);
 
         res.status(201).json({
@@ -59,7 +67,7 @@ async function register(req, res) {
         });
     } catch (error) {
         res.json({
-            message: ""+error
+            message: "error :"+error
         })
     }
 

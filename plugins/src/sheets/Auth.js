@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { MDBContainer, MDBCol, MDBRow, MDBBtn, MDBIcon, MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Auth() {
     const navigate = useNavigate();
@@ -37,11 +39,11 @@ function Auth() {
              
 
             if (response.success) {
-                alert("Login Successful");
+                toast.success(response.message);
                 localStorage.setItem("authToken", response.token);
                 navigate("/success");
             }else{
-                alert(response.message);
+                toast.error(response.message);
             }
         }
         else if (login === false && user.name.length > 4 && user.email.length > 4 && user.password.length > 4) {
@@ -58,12 +60,15 @@ function Auth() {
 
 
             if (response.success) {
-                alert(response.message +" ,Login to continue");
+                toast.success(response.message);
+                setLogin(true);
+            }else{
+                toast.error(response.message);
             }
 
         }
         else {
-            alert("Please fill all the fields");
+            toast.error("Please fill all the fields");
         }
 
     }
@@ -106,6 +111,7 @@ function Auth() {
                 </MDBCol>
 
             </MDBRow>
+            <ToastContainer />
         </MDBContainer>
     );
 }

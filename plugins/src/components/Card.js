@@ -1,4 +1,6 @@
 import React from 'react'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Card = ({ tab, port ,groups}) => {
 
@@ -85,15 +87,16 @@ const Card = ({ tab, port ,groups}) => {
             
 
             if (response.success) {
+                toast.success("New Group Created !!");
                 window.location.reload();
             } else {
+                toast.error(response.message);
                 throw new Error(`${response.msg}`);
             }
             setShowMenu(false);
 
         } catch (error) {
-            // toast.error('Failed to save group', { position: toast.POSITION.TOP_LEFT });
-            console.log(error);
+            toast.error('Failed to save group');
             setShowMenu(false);
         }
     }
@@ -115,17 +118,20 @@ const Card = ({ tab, port ,groups}) => {
             const response = await res.json();
 
             if (response.success) {
-                console.log('added to group');
+                toast.success("Added to group successfully");
             } else {
+                toast.error("Failed to add to group");
                 throw new Error(`${response.msg}`);
             }
         } catch(error){
+            toast.error("Failed to add to group");
             console.log(error);
         }
     }
 
     return (
         <>
+            <ToastContainer />
             {showMenu ? 
             <div className="card m-2 d-flex justify-content-center" style={{ width: "180px", height: "180px" }}>
                     <div style={{
@@ -301,6 +307,7 @@ const Card = ({ tab, port ,groups}) => {
 
         </div>
         }
+            
         </>
     )
 }
