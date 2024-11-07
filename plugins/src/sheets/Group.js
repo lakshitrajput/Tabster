@@ -78,7 +78,7 @@ export const Group = () => {
                
                 <div className='w-100 d-flex align-items-center p-2' style={{justifyContent:"space-between"}}>
                 <button className="button-85" role="button" onClick={() => window.history.back()}>Back</button>
-                <button className="button-85 bg-danger" role="button" >Remove Group</button>
+                <button className="button-85 bg-danger" role="button" >Ungroup</button>
                 </div>
                 <div>
                     <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>

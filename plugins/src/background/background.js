@@ -63,7 +63,7 @@ chrome.runtime.onConnect.addListener((port) => {
         else if(action == 6){
             setActiveTab(action, msg.id);
         }
-        else if(action == 7){
+        else if(action == 71){
             createIncognitoTab(action);
         }
         else if(action == 9){
@@ -72,6 +72,10 @@ chrome.runtime.onConnect.addListener((port) => {
         else if(action == 10){
             // to open/switch a tab inside a group
             openGroupTab(action, msg.tab);
+        }
+        else if(action == 11){
+            // get closed tabs
+            getClosedTabs(action);
         }
     });
 
@@ -167,6 +171,23 @@ chrome.runtime.onConnect.addListener((port) => {
             }
         });
 
+    }
+
+    const getClosedTabs = (action) => {
+        const tabs = [];
+        chrome.sessions.getRecentlyClosed({ maxResults: 10 }, (sessions) => {
+          sessions.forEach((session) => {
+            // if a tab
+            if (session.tab) {
+                tabs.push(session.tab);
+            }
+          });
+          const res = {
+            action: action,
+            tabs: tabs
+          }
+          port.postMessage(res);
+        });
     }
 
 });
