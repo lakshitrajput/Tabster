@@ -7,6 +7,7 @@ export const Home = () => {
     const [tabs, setTabs] = useState([]);
     const [groups, setGroups] = useState([]);
     const port = chrome.runtime.connect({ name: "popup" });
+    const [search,setSearch]=useState('')
 
     const getAllGroups = async () => {
         const authToken = localStorage.getItem('authToken');
@@ -79,14 +80,18 @@ export const Home = () => {
 
                         <div className='mt-2 mb-5'>
                             <div className="box">
-                                <form name="search">
+                                {/* <form name="search"> */}
                                     <input type="text" className="input" name="txt"
-                                        onMouseOut={(e) => {
-                                            e.target.value = ''
-                                            e.target.blur()
+                                        // onMouseOut={(e) => {
+                                        //     e.target.value = ''
+                                        //     e.target.blur()
+                                        // }}
+                                        value={search}
+                                        onChange={(e) => {
+                                            setSearch(e.target.value)
                                         }}
                                     />
-                                </form>
+                                {/* </form> */}
                                 <i className="fas fa-search"></i>
                             </div>
                         </div>
