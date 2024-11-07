@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
 import GroupCard from '../components/GroupCard';
+import RecentTabs from '../components/RecentTabs';
 
 export const Home = () => {
     const [tabs, setTabs] = useState([]);
@@ -75,10 +76,7 @@ export const Home = () => {
 
                 <div className='home'>
                     <div className='home-content'>
-                        {/* <div className="d-flex flex-column align-items-center justify-content-center">
-                    <h1 className='text-warning'>Tabster</h1>
-                    <p className="lead fw-normal mb-0 me-3 text-secondary">Where Tabs Meet Innovation</p>
-                </div> */}
+
                         <div className='mt-2 mb-5'>
                             <div className="box">
                                 <form name="search">
@@ -90,6 +88,22 @@ export const Home = () => {
                                     />
                                 </form>
                                 <i className="fas fa-search"></i>
+                            </div>
+                        </div>
+                        <div style={{position:"absolute",left:"10px",top:"10px"}}>
+                            <div className="dropdown dropdown-hover">
+                                <button data-mdb-button-init data-mdb-ripple-init data-mdb-dropdown-init
+                                    className="border-0 dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-mdb-toggle="dropdown" aria-expanded="false">
+                                    Recent Tabs
+                                </button>
+                                <ul className="dropdown-menu dropdown-menu-hover" aria-labelledby="dropdownMenuButton" style={{width:"300px"}}>
+                                   <RecentTabs />
+                                   <RecentTabs />
+                                   <RecentTabs />
+                                   <RecentTabs />
+                                   <RecentTabs />
+                                </ul>
                             </div>
                         </div>
                         <div>

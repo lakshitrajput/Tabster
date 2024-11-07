@@ -60,12 +60,8 @@ export const Group = () => {
 
 
     return (
-        <div className='home'>
-            <div className='home-content'>
-                {/* <div className="d-flex flex-column align-items-center justify-content-center">
-                    <h1 className='text-warning'>Tabster</h1>
-                    <p className="lead fw-normal mb-0 me-3 text-secondary">Where Tabs Meet Innovation</p>
-                </div> */}
+        <div className='home w-100'>
+            <div className='home-content w-100'>
                 <div className='mt-2 mb-5'>
                     <div className="box">
                         <form name="search">
@@ -79,8 +75,10 @@ export const Group = () => {
                         <i className="fas fa-search"></i>
                     </div>
                 </div>
-                <div className='w-100 d-flex align-items-center justify-content-start mb-2'>
+               
+                <div className='w-100 d-flex align-items-center p-2' style={{justifyContent:"space-between"}}>
                 <button className="button-85" role="button" onClick={() => window.history.back()}>Back</button>
+                <button className="button-85 bg-danger" role="button" >Remove Group</button>
                 </div>
                 <div>
                     <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>
