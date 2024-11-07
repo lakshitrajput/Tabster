@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
 import GroupCard from '../components/GroupCard';
 import RecentTabs from '../components/RecentTabs';
+import { Loader } from '../components/Loader';
 
 export const Home = () => {
     const [tabs, setTabs] = useState([]);
     const [groups, setGroups] = useState([]);
     const [recentTabs, setRecentTabs] = useState([]);
     const port = chrome.runtime.connect({ name: "popup" });
-
+    const [search,setSearch]=useState('')
+    const [loading,setLoading]=useState(false)
     const getAllGroups = async () => {
+        setLoading(true)
         const authToken = localStorage.getItem('authToken');
         const res = await fetch('http://localhost:4000/api/group', {
             method: 'GET',
@@ -19,8 +22,10 @@ export const Home = () => {
         });
         const response = await res.json();
         setGroups(response.groups);
+        setLoading(false)
     }
-
+   console.log(loading);
+   
 
 
 
@@ -91,14 +96,18 @@ export const Home = () => {
 
                         <div className='mt-2 mb-5'>
                             <div className="box">
-                                <form name="search">
+                                {/* <form name="search"> */}
                                     <input type="text" className="input" name="txt"
-                                        onMouseOut={(e) => {
-                                            e.target.value = ''
-                                            e.target.blur()
+                                        // onMouseOut={(e) => {
+                                        //     e.target.value = ''
+                                        //     e.target.blur()
+                                        // }}
+                                        value={search}
+                                        onChange={(e) => {
+                                            setSearch(e.target.value)
                                         }}
                                     />
-                                </form>
+                                {/* </form> */}
                                 <i className="fas fa-search"></i>
                             </div>
                         </div>
@@ -122,6 +131,9 @@ export const Home = () => {
                         </div>
                         <div>
                             <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>
+                            {loading && <div className='bg-dark text-light p-2 mb-3'>
+                                    Connecting Server   <Loader />
+                            </div>}
                                 {groups.map((group) => (
                                     <GroupCard color={group.colour} name={group.name} key={group._id} id={group._id} />
                                 ))}

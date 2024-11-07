@@ -41,7 +41,7 @@ body {
   box-sizing: border-box;
   font-family: Comic Sans MS;
   font-size: 26px;
-  color: #ffd52d;
+  color: white;
   outline: none;
   transition: .5s;
 }
