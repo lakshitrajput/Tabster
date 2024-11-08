@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-const GroupTabCard = ({ tab, port ,groups}) => {
+const GroupTabCard = ({ tab, port ,groups, refreshTabs, groupID }) => {
 
     const [showMenu, setShowMenu] = React.useState(false);
     const [color,setColor] = React.useState("#f0f0f0");
@@ -18,21 +18,6 @@ const GroupTabCard = ({ tab, port ,groups}) => {
     const closeTab = (id) => {
         const msg = {
             action: 1,
-            id: id
-        }
-        port.postMessage(msg);
-    }
-
-    const pinTab = (id) => {
-        const msg = {
-            action: 2,
-            id: id
-        }
-        port.postMessage(msg);
-    }
-    const unPinTab = (id) => {
-        const msg = {
-            action: 3,
             id: id
         }
         port.postMessage(msg);
@@ -138,6 +123,28 @@ const GroupTabCard = ({ tab, port ,groups}) => {
         }
     }
 
+    const handleRemoveTab = async() => {
+        try{
+            const authToken = localStorage.getItem('authToken');
+            const res = await fetch('http://localhost:4000/api/group/remove', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                },
+                body: JSON.stringify({
+                    tabId: tab._id,
+                    groupId: groupID
+                }),
+            });
+            const response = await res.json();
+            refreshTabs();
+            
+        } catch(error){
+            console.log(error);
+        }
+    }
+
     return (
         <>
             <ToastContainer />
@@ -192,7 +199,7 @@ const GroupTabCard = ({ tab, port ,groups}) => {
                 zIndex: 5
             }}>
 
-                <i className="fa fa-user-secret" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Drag" style={{
+                <i className="fa fa-user-secret icon" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Drag" style={{
                     // position: "absolute",
                     // top: "5px",
                     // left: "5px",
@@ -236,23 +243,8 @@ const GroupTabCard = ({ tab, port ,groups}) => {
                         cursor: "pointer",
                         color: "#555"
                     }}></i>
-                {tab?.pinned ? <i className="fa-solid fa-thumbtack-slash icon" onClick={() => { unPinTab(tab?.id) }}
-                    style={{
-                        // position: "absolute",
-                        // top: "5px",
-                        // right: "23px",
-                        cursor: "pointer",
-                        color: "#555"
-                    }}></i> :
-                    <i className="fa-solid fa-thumbtack icon" onClick={() => { pinTab(tab?.id) }}
-                        style={{
-                            // position: "absolute",
-                            // top: "5px",
-                            // right: "23px",
-                            cursor: "pointer",
-                            color: "#555"
-                        }}></i>
-                }
+                <i class="fa-solid fa-square-minus icon" style={{cursor:'pointer'}} onClick={handleRemoveTab} ></i>
+
                 <i className="fas fa-times icon-red" onClick={() => { closeTab(tab?.id) }}
                     style={{
                         // position: "absolute",

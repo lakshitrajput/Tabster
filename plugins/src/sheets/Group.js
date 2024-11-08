@@ -109,6 +109,8 @@ export const Group = () => {
                                 tab={tab}
                                 port={port}
                                 groups={groups}
+                                refreshTabs={getAllGroups}
+                                groupID={groupID}
                             />
                         ))}
                     </div>
