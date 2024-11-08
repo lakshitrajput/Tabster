@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import GroupTabCard from '../components/GroupTabCard';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export const Group = () => {
     const groupID=useParams().id;
-
+    const navigate = useNavigate();
     const [tabs, setTabs] = useState([]);
     const [groups, setGroups] = useState([]);
     const port = chrome.runtime.connect({ name: "popup" });
@@ -58,6 +58,27 @@ export const Group = () => {
     //     port.postMessage(msg);
     // }
 
+    const handleUngroup = async () => {
+        const authToken = localStorage.getItem('authToken');
+        const res = await fetch('http://localhost:4000/api/group', {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                groupId: groupID
+            })
+        });
+        const response = await res.json();
+        console.log(response);
+        if(response.success){
+            navigate("/");
+        }
+        else{
+            console.log('error removing group');
+        }
+    }
 
 
     return (
@@ -77,7 +98,7 @@ export const Group = () => {
                
                 <div className='w-100 d-flex align-items-center p-2' style={{justifyContent:"space-between"}}>
                 <button className="button-85" role="button" onClick={() => window.history.back()}>Back</button>
-                <button className="button-85 bg-danger" role="button" >Ungroup</button>
+                <button className="button-85 bg-danger" role="button" onClick={handleUngroup} >Ungroup</button>
                 </div>
                 <div>
                     <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>

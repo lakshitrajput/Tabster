@@ -63,7 +63,7 @@ chrome.runtime.onConnect.addListener((port) => {
         else if(action == 6){
             setActiveTab(action, msg.id);
         }
-        else if(action == 71){
+        else if(action == 7){
             createIncognitoTab(action);
         }
         else if(action == 9){

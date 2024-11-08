@@ -24,7 +24,6 @@ export const Home = () => {
         setGroups(response.groups);
         setLoading(false)
     }
-   console.log(loading);
    
 
 
@@ -51,7 +50,6 @@ export const Home = () => {
             }
             else if (action == 11) {
                 setRecentTabs(res.tabs);
-                console.log(res.tabs);
             }
         });
 
