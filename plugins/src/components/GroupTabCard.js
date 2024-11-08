@@ -243,7 +243,7 @@ const GroupTabCard = ({ tab, port ,groups, refreshTabs, groupID }) => {
                         cursor: "pointer",
                         color: "#555"
                     }}></i>
-                <i class="fa-solid fa-square-minus icon" style={{cursor:'pointer'}} onClick={handleRemoveTab} ></i>
+                <i className="fa-solid fa-square-minus icon" style={{cursor:'pointer'}} onClick={handleRemoveTab} ></i>
 
                 <i className="fas fa-times icon-red" onClick={() => { closeTab(tab?.id) }}
                     style={{

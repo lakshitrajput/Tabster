@@ -117,19 +117,21 @@ export const Group = () => {
                
                 <div className='w-100 d-flex align-items-center p-2' style={{justifyContent:"space-between"}}>
                 <button className="button-85" role="button" onClick={() => window.history.back()}>Back</button>
-                <button className="button-85 bg-warning" style={{cursor:"default"}} role="button" disabled>{activeGroup.name}</button>
+                <button className="button-85 bg-warning" style={{cursor:"default"}} role="button" disabled>{activeGroup?.name}</button>
                 <button className="button-85 bg-danger" role="button" onClick={handleUngroup} >Ungroup</button>
 
                 </div>
                 <div>
                     <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>
-                        {search.length==0 && tabs.map((tab) => (
+                        {search.length===0 && tabs.map((tab) => (
                             (tab.title != 'tabster') &&
                             <GroupTabCard
                                 key={tab.id}
                                 tab={tab}
                                 port={port}
                                 groups={groups}
+                                refreshTabs={getAllGroups}
+                                groupID={groupID}
                             />
                         ))}
                         {search.length>0 && searchTabs.map((tab) => (
