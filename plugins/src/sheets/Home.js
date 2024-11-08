@@ -6,6 +6,7 @@ import { Loader } from '../components/Loader';
 
 export const Home = () => {
     const [tabs, setTabs] = useState([]);
+    const [searchTabs,setSearchTabs]=useState([])
     const [groups, setGroups] = useState([]);
     const port = chrome.runtime.connect({ name: "popup" });
     const [search,setSearch]=useState('')
@@ -23,7 +24,23 @@ export const Home = () => {
         setGroups(response.groups);
         setLoading(false)
     }
-   console.log(loading);
+
+    useEffect(()=>{
+        handleSearch();
+    },[search])
+    
+    const handleSearch=async()=>{
+        if(search.length>0){
+            const filteredTabs = tabs.filter(
+                (tab) =>
+                    tab.title.toLowerCase().includes(search.toLowerCase()) ||
+                    tab.url.toLowerCase().includes(search.toLowerCase())
+            );
+            setSearchTabs(filteredTabs);
+        }else{
+            setSearchTabs([])
+        }
+    }
    
 
 
@@ -82,7 +99,7 @@ export const Home = () => {
                 <div className='home'>
                     <div className='home-content'>
 
-                        <div className='mt-2 mb-5'>
+                        <div className='mt-2 mb-5' >
                             <div className="box">
                                 {/* <form name="search"> */}
                                     <input type="text" className="input" name="txt"
@@ -116,16 +133,26 @@ export const Home = () => {
                             </div>
                         </div>
                         <div>
-                            <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>
+                            <div className='d-flex flex-row align-items-center justify-content-center flex-wrap' >
                             {loading && <div className='bg-dark text-light p-2 mb-3'>
                                     Connecting Server   <Loader />
                             </div>}
+
                                 {groups.map((group) => (
                                     <GroupCard color={group.colour} name={group.name} key={group._id} id={group._id} />
                                 ))}
                             </div>
-                            <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>
-                                {tabs.map((tab) => (
+                            <div className='d-flex flex-row align-items-center justify-content-center flex-wrap' >
+                                {search.length==0 && tabs.map((tab) => (
+                                    (tab.title != 'tabster') &&
+                                    <Card
+                                        key={tab.id}
+                                        tab={tab}
+                                        port={port}
+                                        groups={groups}
+                                    />
+                                ))}
+                                {searchTabs.length>0 && searchTabs.map((tab) => (
                                     (tab.title != 'tabster') &&
                                     <Card
                                         key={tab.id}

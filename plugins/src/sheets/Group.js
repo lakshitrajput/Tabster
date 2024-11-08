@@ -9,6 +9,8 @@ export const Group = () => {
     const [groups, setGroups] = useState([]);
     const port = chrome.runtime.connect({ name: "popup" });
     const [search,setSearch]=useState('')
+    const [activeGroup,setActiveGroup]=useState([])
+    const [searchTabs, setSearchTabs] = useState([])
 
     const getAllGroups = async () => {
         const authToken = localStorage.getItem('authToken');
@@ -23,10 +25,27 @@ export const Group = () => {
 
 
         const currGroup=response.groups.find((group)=>group._id===groupID);
+        setActiveGroup(currGroup)
         setTabs(currGroup.tabs);        
 
     }
+    
+    useEffect(() => {
+        handleSearch();
+    }, [search])
 
+    const handleSearch = async () => {
+        if (search.length > 0) {
+            const filteredTabs = tabs.filter(
+                (tab) =>
+                    tab.title.toLowerCase().includes(search.toLowerCase()) ||
+                    tab.url.toLowerCase().includes(search.toLowerCase())
+            );
+            setSearchTabs(filteredTabs);
+        } else {
+            setSearchTabs([])
+        }
+    }
 
     useEffect(() => {
         getAllGroups();
@@ -77,11 +96,22 @@ export const Group = () => {
                
                 <div className='w-100 d-flex align-items-center p-2' style={{justifyContent:"space-between"}}>
                 <button className="button-85" role="button" onClick={() => window.history.back()}>Back</button>
+                <button className="button-85 bg-warning" style={{cursor:"default"}} role="button" disabled>{activeGroup.name}</button>
+
                 <button className="button-85 bg-danger" role="button" >Remove Group</button>
                 </div>
                 <div>
                     <div className='d-flex flex-row align-items-center justify-content-center flex-wrap'>
-                        {tabs.map((tab) => (
+                        {search.length==0 && tabs.map((tab) => (
+                            (tab.title != 'tabster') &&
+                            <GroupTabCard
+                                key={tab.id}
+                                tab={tab}
+                                port={port}
+                                groups={groups}
+                            />
+                        ))}
+                        {search.length>0 && searchTabs.map((tab) => (
                             (tab.title != 'tabster') &&
                             <GroupTabCard
                                 key={tab.id}
