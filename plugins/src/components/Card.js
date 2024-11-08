@@ -192,7 +192,7 @@ const Card = ({ tab, port ,groups}) => {
                 zIndex: 5
             }}>
 
-                <i className="fa fa-user-secret" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Drag" style={{
+                <i className="fa fa-user-secret icon" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Drag" style={{
                     // position: "absolute",
                     // top: "5px",
                     // left: "5px",

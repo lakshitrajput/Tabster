@@ -131,6 +131,12 @@ async function removeTabFromGroup(req, res){
 async function ungroup(req, res){
     try{
         const { groupId } = req.body;
+        if(!groupId){
+            res.status(404).json({
+                success:false,
+                msg:"groupId not found"
+            })
+        }
         const user = req.user;
         await userModel.findOneAndUpdate({ _id:user._id  }, {
             $pull: { groups: groupId }
@@ -141,7 +147,7 @@ async function ungroup(req, res){
             success:true,
             msg: "group ungrouped successfully"
         });
-    } catch(eror){
+    } catch(error){
         res.status(500).json({
             msg: ""+error
         })

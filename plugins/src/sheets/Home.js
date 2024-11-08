@@ -8,6 +8,7 @@ export const Home = () => {
     const [tabs, setTabs] = useState([]);
     const [searchTabs,setSearchTabs]=useState([])
     const [groups, setGroups] = useState([]);
+    const [recentTabs, setRecentTabs] = useState([]);
     const port = chrome.runtime.connect({ name: "popup" });
     const [search,setSearch]=useState('')
     const [loading,setLoading]=useState(false)
@@ -24,6 +25,7 @@ export const Home = () => {
         setGroups(response.groups);
         setLoading(false)
     }
+
 
     useEffect(()=>{
         handleSearch();
@@ -48,6 +50,7 @@ export const Home = () => {
     useEffect(() => {
         getAllTabs();
         getAllGroups();
+        getClosedTabs();
 
         // to prevent the port becoming inactive after some time
         const interval = setInterval(() => {
@@ -63,6 +66,9 @@ export const Home = () => {
             const action = res.action;
             if (action == 0) {
                 setTabs(res.data);
+            }
+            else if (action == 11) {
+                setRecentTabs(res.tabs);
             }
         });
 
@@ -91,6 +97,12 @@ export const Home = () => {
         port.postMessage(msg);
     }
 
+    const getClosedTabs = () => {
+        const msg = {
+            action: 11
+        }
+        port.postMessage(msg);
+    }
 
     return (
         <>
@@ -116,19 +128,21 @@ export const Home = () => {
                                 <i className="fas fa-search"></i>
                             </div>
                         </div>
-                        <div style={{position:"absolute",left:"10px",top:"10px"}}>
+                        <div style={{ position: "absolute", left: "10px", top: "10px" }}>
                             <div className="dropdown dropdown-hover">
                                 <button data-mdb-button-init data-mdb-ripple-init data-mdb-dropdown-init
                                     className="border-0 dropdown-toggle" type="button" id="dropdownMenuButton"
                                     data-mdb-toggle="dropdown" aria-expanded="false">
                                     Recent Tabs
                                 </button>
-                                <ul className="dropdown-menu dropdown-menu-hover" aria-labelledby="dropdownMenuButton" style={{width:"300px"}}>
-                                   <RecentTabs />
-                                   <RecentTabs />
-                                   <RecentTabs />
-                                   <RecentTabs />
-                                   <RecentTabs />
+                                <ul className="dropdown-menu dropdown-menu-hover" aria-labelledby="dropdownMenuButton" style={{ width: "300px" }}>
+                                    {recentTabs.length > 0 ? (
+                                        recentTabs.map((tab, index) => (
+                                            <RecentTabs key={index} tab={tab} />
+                                        ))
+                                    ) : (
+                                        <li>No recent tabs</li>
+                                    )}
                                 </ul>
                             </div>
                         </div>
