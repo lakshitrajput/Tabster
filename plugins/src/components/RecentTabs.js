@@ -1,10 +1,20 @@
 import React from 'react';
 
-export default function RecentTabs({ tab }) {
+export default function RecentTabs({ tab, port }) {
+  const restoreTab = () => {
+    const msg = {
+      action: 12,
+      tab: tab
+    }
+    port.postMessage(msg);
+    window.close();
+  }
+
+
   return (
     <li>
       <a className="dropdown-item" href="#">
-        <div className="d-flex flex-row align-items-center w-100" style={{ width: "100%", height: "50px" }}>
+        <div className="d-flex flex-row align-items-center w-100" style={{ width: "100%", height: "50px" }} onClick={restoreTab} >
           {/* Uncomment this div to include the favicon */}
           {/* <div style={{ width: "50px", height: "50px", flexShrink: 0 }}>
             <img src={tab.favIconUrl} alt="favicon" style={{ width: "100%", height: "100%", objectFit: "cover" }} />

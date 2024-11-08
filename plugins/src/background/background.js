@@ -44,38 +44,41 @@ chrome.runtime.onConnect.addListener((port) => {
             // fetch all opened tabs
             sendAllTabs(action);
         }
-        else if(action == 1){
+        else if (action == 1) {
             // close tab with the given id
             closeTab(action, msg.id);
         }
-        else if(action == 2){
+        else if (action == 2) {
             pinTab(action, msg.id);
         }
-        else if(action == 3){
+        else if (action == 3) {
             unPinTab(action, msg.id);
         }
-        else if(action == 4){
+        else if (action == 4) {
             duplicateTab(action, msg.id);
         }
-        else if(action == 5){
+        else if (action == 5) {
             createNewTab(action);
         }
-        else if(action == 6){
+        else if (action == 6) {
             setActiveTab(action, msg.id);
         }
-        else if(action == 7){
+        else if (action == 7) {
             createIncognitoTab(action);
         }
-        else if(action == 9){
+        else if (action == 9) {
             openInIncognito(action, msg.url);
         }
-        else if(action == 10){
+        else if (action == 10) {
             // to open/switch a tab inside a group
             openGroupTab(action, msg.tab);
         }
-        else if(action == 11){
+        else if (action == 11) {
             // get closed tabs
             getClosedTabs(action);
+        }
+        else if (action == 12) {
+            restoreTab(action, msg.tab);
         }
     });
 
@@ -92,7 +95,7 @@ chrome.runtime.onConnect.addListener((port) => {
         });
     }
 
-    
+
     const closeTab = (action, tabId) => {
         chrome.tabs.remove(tabId, () => {
             sendAllTabs(0);
@@ -136,16 +139,16 @@ chrome.runtime.onConnect.addListener((port) => {
     }
 
     const openInIncognito = (action, taburl) => {
-        chrome.windows.create({  
+        chrome.windows.create({
             url: taburl,
             incognito: true
-        })    
+        })
     }
 
     const openGroupTab = (action, tab) => {
         chrome.tabs.query({}, (tabs) => {
             const targetTab = tabs.find(elm => elm.id === tab.id);
-    
+
             if (targetTab) {
                 // If the tab with the specified ID exists, activate it
                 chrome.tabs.update(tab.id, { active: true });
@@ -162,10 +165,10 @@ chrome.runtime.onConnect.addListener((port) => {
                             newTabId: newTab.id
                         })
                     })
-                    .then(response => response.json())
-                    .catch(error => {
-                        console.error('Error with API request:', error);
-                    });
+                        .then(response => response.json())
+                        .catch(error => {
+                            console.error('Error with API request:', error);
+                        });
 
                 });
             }
@@ -176,19 +179,38 @@ chrome.runtime.onConnect.addListener((port) => {
     const getClosedTabs = (action) => {
         const tabs = [];
         chrome.sessions.getRecentlyClosed({ maxResults: 10 }, (sessions) => {
-          sessions.forEach((session) => {
-            // if a tab
-            if (session.tab) {
-                tabs.push(session.tab);
+            sessions.forEach((session) => {
+                // if a tab
+                if (session.tab) {
+                    tabs.push(session.tab);
+                }
+            });
+            const res = {
+                action: action,
+                tabs: tabs
             }
-          });
-          const res = {
-            action: action,
-            tabs: tabs
-          }
-          port.postMessage(res);
+            port.postMessage(res);
         });
     }
+
+    const restoreTab = (action, tab) => {
+        chrome.windows.getAll({ populate: true }, (windows) => {
+            // Find a window that is not the popup and is a normal browser window
+            const mainWindow = windows.find(win => win.type === 'normal');
+    
+            if (mainWindow) {
+                chrome.sessions.restore(tab.sessionId, (restoredTab) => {
+                    if (restoredTab && restoredTab.id) {
+                        chrome.tabs.move(restoredTab.id, { windowId: mainWindow.id, index: -1 }, () => {
+                            console.log('Tab restored to the main window');
+                        });
+                    }
+                });
+            } else {
+                console.error('No suitable main window found');
+            }
+        });
+    };
 
 });
 
