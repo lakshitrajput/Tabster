@@ -46,6 +46,9 @@ export const Home = () => {
         }
     }
    
+    // useEffect(()=>{
+    //   getAllGroups();
+    // },[showJoinGroup])
 
 
 
