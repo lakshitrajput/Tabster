@@ -13,7 +13,7 @@
     "default_title": "React Extension",
     "default_icon": "icon.png"
   },
-  "permissions": ["storage","contextMenus","windows","tabs","activeTab","system.display","sessions"],
+  "permissions": ["storage","contextMenus","windows","tabs","activeTab","system.display","sessions","bookmarks"],
   "incognito": "split",
   "options_page": "options.html",
   "background": {

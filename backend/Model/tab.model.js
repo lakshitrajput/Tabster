@@ -15,10 +15,6 @@ const tabSchema = new mongoose.Schema({
     },
     favIconUrl: {
         type: String
-    },
-    isBookmarked: {
-        type: Boolean,
-        default: false
     }
 })
 

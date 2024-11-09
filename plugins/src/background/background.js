@@ -66,6 +66,9 @@ chrome.runtime.onConnect.addListener((port) => {
         else if (action == 7) {
             createIncognitoTab(action);
         }
+        else if (action == 8) {
+            createBookmark(action, msg.tab);
+        }
         else if (action == 9) {
             openInIncognito(action, msg.url);
         }
@@ -79,6 +82,9 @@ chrome.runtime.onConnect.addListener((port) => {
         }
         else if (action == 12) {
             restoreTab(action, msg.tab);
+        }
+        else if(action == 13){
+            unbookmark(action, msg.tab);
         }
     });
 
@@ -153,8 +159,8 @@ chrome.runtime.onConnect.addListener((port) => {
             if (targetTab) {
                 // If the tab with the specified ID exists, activate it
                 chrome.tabs.update(tab.id, { active: true });
-            } 
-            else if(existingTabWithSameUrl){
+            }
+            else if (existingTabWithSameUrl) {
                 chrome.tabs.update(existingTabWithSameUrl.id, { active: true });
                 fetch('http://localhost:4000/api/tab', {
                     method: 'PUT',
@@ -216,7 +222,7 @@ chrome.runtime.onConnect.addListener((port) => {
         chrome.windows.getAll({ populate: true }, (windows) => {
             // Find a window that is not the popup and is a normal browser window
             const mainWindow = windows.find(win => win.type === 'normal');
-    
+
             if (mainWindow) {
                 chrome.sessions.restore(tab.sessionId, (restoredTab) => {
                     if (restoredTab && restoredTab.id) {
@@ -230,6 +236,68 @@ chrome.runtime.onConnect.addListener((port) => {
             }
         });
     };
+
+    const createBookmark = (action, tab) => {
+        chrome.bookmarks.getTree((bookmarkTreeNodes) => {
+            const bookmarkBar = bookmarkTreeNodes[0].children.find(node => node.title === 'Bookmarks bar');
+
+            if (bookmarkBar) {
+                const tabsterFolder = bookmarkBar.children.find(folder => folder.title === 'Tabster Bookmarks');
+
+                if (tabsterFolder) {
+                    addBookmark(tabsterFolder.id);
+                } else {
+                    chrome.bookmarks.create({
+                        parentId: bookmarkBar.id,
+                        title: 'Tabster Bookmarks'
+                    }, (newFolder) => {
+                        addBookmark(newFolder.id);
+                    });
+                }
+            } else {
+                console.error('Bookmarks Bar not found');
+            }
+        });
+
+        const addBookmark = (parentId) => {
+            chrome.bookmarks.create({
+                parentId: parentId,
+                title: tab.title,
+                url: tab.url
+            }, () => {
+                sendAllTabs(0);
+            });
+        };
+    }
+
+    const unbookmark = (action, tab) => {
+        chrome.bookmarks.getTree((bookmarkTreeNodes) => {
+            const bookmarkBar = bookmarkTreeNodes[0].children.find(node => node.title === 'Bookmarks bar');
+    
+            if (bookmarkBar) {
+                const tabsterFolder = bookmarkBar.children.find(folder => folder.title === 'Tabster Bookmarks');
+    
+                if (tabsterFolder) {
+                    const existingBookmark = tabsterFolder.children.find(bookmark => bookmark.url === tab.url);
+    
+                    if (existingBookmark) {
+                        // Unbookmark the tab
+                        chrome.bookmarks.remove(existingBookmark.id, () => {
+                            sendAllTabs(0);
+                        });
+                    } else {
+                        console.log('Tab is not bookmarked in Tabster Bookmarks');
+                    }
+                } else {
+                    console.log('Tabster Bookmarks folder not found');
+                }
+            } else {
+                console.error('Bookmarks Bar not found');
+            }
+        });
+    };
+    
+    
 
 });
 

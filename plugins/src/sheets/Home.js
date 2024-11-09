@@ -65,6 +65,7 @@ export const Home = () => {
         port.onMessage.addListener((res) => {
             const action = res.action;
             if (action == 0) {
+                console.log(res.data);
                 setTabs(res.data);
             }
             else if (action == 11) {
