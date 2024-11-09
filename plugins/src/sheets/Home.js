@@ -3,6 +3,7 @@ import Card from '../components/Card'
 import GroupCard from '../components/GroupCard';
 import RecentTabs from '../components/RecentTabs';
 import { Loader } from '../components/Loader';
+import JoinGroupModal from '../components/JoinGroupModal';
 
 export const Home = () => {
     const [tabs, setTabs] = useState([]);
@@ -12,6 +13,7 @@ export const Home = () => {
     const port = chrome.runtime.connect({ name: "popup" });
     const [search,setSearch]=useState('')
     const [loading,setLoading]=useState(false)
+    const [showJoinGroup, setShowJoinGroup] = useState(false);
     const getAllGroups = async () => {
         setLoading(true)
         const authToken = localStorage.getItem('authToken');
@@ -105,10 +107,12 @@ export const Home = () => {
         port.postMessage(msg);
     }
 
+  
     return (
         <>
             {localStorage.getItem('authToken') ?
-
+                <div>
+                {showJoinGroup ? <JoinGroupModal setShowJoinGroup={setShowJoinGroup}/> :
                 <div className='home'>
                     <div className='home-content'>
 
@@ -183,8 +187,10 @@ export const Home = () => {
                         <div className='mt-2'>
                             <button className="button-85" role="button" onClick={createNewTab}><i className='fa-sharp-duotone fa-solid fa-plus'></i></button>
                             <button className="button-85" role="button" onClick={createIncognitoTab} style={{ marginLeft: "6px" }}><i className='fa fa-user-secret' aria-hidden="true"></i></button>
+                            <button className="button-85" role="button" onClick={()=>setShowJoinGroup(true)} style={{ marginLeft: "6px" }}><i class="fa-solid fa-user-group"></i></button>
                         </div>
                     </div>
+                    </div>}
                 </div> :
                 <div className='home'>
                     <div className='home-content'>

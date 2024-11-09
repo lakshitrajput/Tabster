@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import GroupTabCard from '../components/GroupTabCard';
 import { useParams, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const Group = () => {
     const groupID=useParams().id;
@@ -11,6 +12,9 @@ export const Group = () => {
     const [search,setSearch]=useState('')
     const [activeGroup,setActiveGroup]=useState([])
     const [searchTabs, setSearchTabs] = useState([])
+
+    console.log(activeGroup);
+    
 
     const getAllGroups = async () => {
         const authToken = localStorage.getItem('authToken');
@@ -77,6 +81,12 @@ export const Group = () => {
     //     port.postMessage(msg);
     // }
 
+    const handleCopy = () => {
+        navigator.clipboard.writeText(activeGroup.groupCode)
+            .then(() => toast.success("Text copied to clipboard!"))
+            .catch((err) => toast.error("Failed to copy text: ", err));
+    };
+
     const handleUngroup = async () => {
         const authToken = localStorage.getItem('authToken');
         const res = await fetch('http://localhost:4000/api/group', {
@@ -117,7 +127,12 @@ export const Group = () => {
                
                 <div className='w-100 d-flex align-items-center p-2' style={{justifyContent:"space-between"}}>
                 <button className="button-85" role="button" onClick={() => window.history.back()}>Back</button>
-                <button className="button-85 bg-warning" style={{cursor:"default"}} role="button" disabled>{activeGroup?.name}</button>
+                    <button className="button-85 bg-warning" style={{ cursor: "pointer" }} role="button" onClick={handleCopy}>
+                    <div className='d-flex flex-column'>
+                    <div>{activeGroup?.name} </div>
+                            <div>{activeGroup.groupCode} <span><i class="fa-solid fa-copy"></i></span></div>
+                    </div>
+                    </button>
                 <button className="button-85 bg-danger" role="button" onClick={handleUngroup} >Ungroup</button>
 
                 </div>
