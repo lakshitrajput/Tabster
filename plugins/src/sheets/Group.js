@@ -130,7 +130,7 @@ export const Group = () => {
                     <button className="button-85 bg-warning" style={{ cursor: "pointer" }} role="button" onClick={handleCopy}>
                     <div className='d-flex flex-column'>
                     <div>{activeGroup?.name} </div>
-                            <div>{activeGroup.groupCode} <span><i class="fa-solid fa-copy"></i></span></div>
+                            <div>{activeGroup.groupCode} <span><i className="fa-solid fa-copy"></i></span></div>
                     </div>
                     </button>
                 <button className="button-85 bg-danger" role="button" onClick={handleUngroup} >Ungroup</button>

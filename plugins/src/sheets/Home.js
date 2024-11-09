@@ -190,7 +190,7 @@ export const Home = () => {
                         <div className='mt-2'>
                             <button className="button-85" role="button" onClick={createNewTab}><i className='fa-sharp-duotone fa-solid fa-plus'></i></button>
                             <button className="button-85" role="button" onClick={createIncognitoTab} style={{ marginLeft: "6px" }}><i className='fa fa-user-secret' aria-hidden="true"></i></button>
-                            <button className="button-85" role="button" onClick={()=>setShowJoinGroup(true)} style={{ marginLeft: "6px" }}><i class="fa-solid fa-user-group"></i></button>
+                            <button className="button-85" role="button" onClick={()=>setShowJoinGroup(true)} style={{ marginLeft: "6px" }}><i className="fa-solid fa-user-group"></i></button>
                         </div>
                     </div>
                     </div>}
