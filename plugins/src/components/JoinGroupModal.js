@@ -13,6 +13,7 @@ export default function JoinGroupModal({ setShowJoinGroup }) {
       const res = await fetch(`http://localhost:4000/api/group/add`, {
           method: 'POST',
           headers: {
+              'Content-Type': 'application/json',
               'Authorization': `Bearer ${authToken}`
           },
           body: JSON.stringify({
