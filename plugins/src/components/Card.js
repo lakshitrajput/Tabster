@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-const Card = ({ tab, port, groups }) => {
+const Card = ({ tab, port, groups, refreshGroup }) => {
 
     const [showMenu, setShowMenu] = React.useState(false);
     const [color, setColor] = React.useState("#f0f0f0");
@@ -108,8 +108,9 @@ const Card = ({ tab, port, groups }) => {
 
 
             if (response.success) {
-                toast.success("New Group Created !!");
-                window.location.reload();
+                // toast.success("New Group Created !!");
+                // window.location.reload();
+                refreshGroup();
             } else {
                 toast.error(response.message);
                 throw new Error(`${response.msg}`);

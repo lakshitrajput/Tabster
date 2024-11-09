@@ -165,6 +165,7 @@ export const Home = () => {
                                         tab={tab}
                                         port={port}
                                         groups={groups}
+                                        refreshGroup={getAllGroups}
                                     />
                                 ))}
                                 {searchTabs.length>0 && searchTabs.map((tab) => (
@@ -174,6 +175,7 @@ export const Home = () => {
                                         tab={tab}
                                         port={port}
                                         groups={groups}
+                                        refreshGroup={getAllGroups}
                                     />
                                 ))}
                             </div>
