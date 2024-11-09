@@ -4,6 +4,7 @@ import GroupCard from '../components/GroupCard';
 import RecentTabs from '../components/RecentTabs';
 import { Loader } from '../components/Loader';
 import JoinGroupModal from '../components/JoinGroupModal';
+import { Link } from 'react-router-dom';
 
 export const Home = () => {
     const [tabs, setTabs] = useState([]);
@@ -118,7 +119,9 @@ export const Home = () => {
                 {showJoinGroup ? <JoinGroupModal setShowJoinGroup={setShowJoinGroup}/> :
                 <div className='home'>
                     <div className='home-content'>
-
+                        <div style={{position:"absolute" , right:"10px", top:"10px"}}>
+                        <Link className='button-5' to="/chart"><i class="fa-solid fa-chart-line"></i></Link>
+                        </div>
                         <div className='mt-2 mb-5' >
                             <div className="box">
                                 {/* <form name="search"> */}
