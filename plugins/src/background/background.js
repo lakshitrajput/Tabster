@@ -105,6 +105,7 @@ chrome.runtime.onConnect.addListener((port) => {
     const closeTab = (action, tabId) => {
         chrome.tabs.remove(tabId, () => {
             sendAllTabs(0);
+            getClosedTabs(11);
         });
     }
 
