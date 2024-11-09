@@ -148,11 +148,30 @@ chrome.runtime.onConnect.addListener((port) => {
     const openGroupTab = (action, tab) => {
         chrome.tabs.query({}, (tabs) => {
             const targetTab = tabs.find(elm => elm.id === tab.id);
+            const existingTabWithSameUrl = tabs.find(elm => elm.url === tab.url && elm.id !== tab.id);
 
             if (targetTab) {
                 // If the tab with the specified ID exists, activate it
                 chrome.tabs.update(tab.id, { active: true });
-            } else {
+            } 
+            else if(existingTabWithSameUrl){
+                chrome.tabs.update(existingTabWithSameUrl.id, { active: true });
+                fetch('http://localhost:4000/api/tab', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        tabId: tab.id,
+                        newTabId: existingTabWithSameUrl.id
+                    })
+                })
+                    .then(response => response.json())
+                    .catch(error => {
+                        console.error('Error with API request:', error);
+                    });
+            }
+            else {
                 // If the tab does not exist, open a new one with the specified URL
                 chrome.tabs.create({ url: tab.url }, (newTab) => {
                     fetch('http://localhost:4000/api/tab', {
