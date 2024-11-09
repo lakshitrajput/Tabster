@@ -11,7 +11,10 @@ const groupSchema = new mongoose.Schema({
     tabs: [{
         type:mongoose.Schema.Types.ObjectId,
         ref: 'tabModel'
-    }]
+    }],
+    groupCode: {
+        type: String
+    }
 })
 
 const groupModel = mongoose.model("groupModel", groupSchema);
