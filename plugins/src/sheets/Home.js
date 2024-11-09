@@ -146,7 +146,7 @@ export const Home = () => {
                                 <ul className="dropdown-menu dropdown-menu-hover" aria-labelledby="dropdownMenuButton" style={{ width: "300px" }}>
                                     {recentTabs.length > 0 ? (
                                         recentTabs.map((tab, index) => (
-                                            <RecentTabs key={index} tab={tab} port={port} />
+                                            tab.title !== 'tabster' && <RecentTabs key={index} tab={tab} port={port} />
                                         ))
                                     ) : (
                                         <li>No recent tabs</li>
