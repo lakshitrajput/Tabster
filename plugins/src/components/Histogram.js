@@ -19,7 +19,6 @@ const Histogram = ({ data }) => {
         return acc;
     }, {});
 
-    console.log(aggregatedData);
     
     
     const chartData = {

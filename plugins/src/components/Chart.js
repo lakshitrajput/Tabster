@@ -27,13 +27,12 @@ export default function Chart() {
     useEffect(() => {
         fetchData();
     },[])
-console.log(data);
 
   return (
       <div >
           <div >
               <div style={{ position: "absolute", top: "10px", right: "10px" ,border:"1px solid black",padding:"5px"}}>
-                  <Link to="/" ><i class="fa-solid fa-square-xmark text-danger"></i></Link>
+                  <Link to="/" ><i className="fa-solid fa-square-xmark text-danger"></i></Link>
               </div>
               <div className="d-flex flex-column align-items-center justify-content-center">
                   <h1 className='text-warning'>Tabster</h1>

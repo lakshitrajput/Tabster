@@ -19,6 +19,14 @@
   "background": {
     "service_worker": "background.js"
   },
+  "commands": {
+    "open_popup": {
+      "suggested_key": {
+        "default": "Ctrl+I"
+      },
+      "description": "Open a custom popup window"
+    }
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
