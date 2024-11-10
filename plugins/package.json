@@ -39,10 +39,13 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.6.0",
     "bootstrap": "^5.3.3",
+    "chart.js": "^4.4.6",
     "mdb-react-ui-kit": "^9.0.0",
     "react-bootstrap": "^2.10.5",
+    "react-chartjs-2": "^5.2.0",
     "react-router-dom": "^6.27.0",
     "react-toastify": "^10.0.6",
+    "recharts": "^2.13.3",
     "webpack-dev-server": "^5.1.0"
   }
 }

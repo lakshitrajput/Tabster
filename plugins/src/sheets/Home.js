@@ -128,7 +128,7 @@ export const Home = () => {
                 <div className='home'>
                     <div className='home-content'>
                         <div style={{position:"absolute" , right:"10px", top:"10px"}}>
-                        <Link className='button-5' to="/chart"><i class="fa-solid fa-chart-line"></i></Link>
+                        <Link className='button-85' to="/chart"><i class="fa-solid fa-chart-line"></i></Link>
                         </div>
                         <div className='mt-2 mb-5' >
                             <div className="box">

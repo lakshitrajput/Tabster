@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Histogram from './Histogram';
 
 export default function Chart() {
+
+    const [data,setData]=useState([]);
 
  
     const fetchData = async () => {
@@ -14,7 +17,7 @@ export default function Chart() {
                 },
             });
             const response = await res.json();
-            console.log(response);
+            setData(response.data);
 
         } catch (error) {
             console.log(error);
@@ -25,8 +28,8 @@ export default function Chart() {
     },[])
 
   return (
-      <div className='home'>
-          <div className='home-content'>
+      <div >
+          <div >
               <div style={{ position: "absolute", top: "10px", right: "10px" ,border:"1px solid black",padding:"5px"}}>
                   <Link to="/" ><i class="fa-solid fa-square-xmark text-danger"></i></Link>
               </div>
@@ -35,7 +38,7 @@ export default function Chart() {
                   <p className="lead fw-normal mb-0 me-3 text-secondary">Where Tabs Meet Innovation</p>
               </div>
               <div>
-
+               <Histogram data={data}/>
               </div>
           </div>
       </div>
