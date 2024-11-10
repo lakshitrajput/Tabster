@@ -170,9 +170,6 @@ chrome.runtime.onConnect.addListener((port) => {
         else if(action == 13){
             unbookmark(action, msg.tab);
         }
-        else if(action == 15){
-            handleSetToken(action, msg.token);
-        }
     });
 
 
@@ -385,9 +382,6 @@ chrome.runtime.onConnect.addListener((port) => {
         });
     };
 
-    const handleSetToken = (action, authToken) => {
-        token = authToken;
-    }
 
 
 });

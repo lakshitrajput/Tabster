@@ -22,14 +22,7 @@ function Auth() {
         })
     }
 
-    const handleSetToken = () => {
-        const authToken = localStorage.getItem('authToken');
-        const msg = {
-            action: 15,
-            token: authToken
-        }
-        port.postMessage(msg);
-    }
+
 
 
 
@@ -51,7 +44,6 @@ function Auth() {
             if (response.success) {
                 toast.success(response.message);
                 localStorage.setItem("authToken", response.token);
-                handleSetToken();
                 navigate("/success");
             }else{
                 toast.error(response.message);
