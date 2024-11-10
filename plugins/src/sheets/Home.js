@@ -45,6 +45,7 @@ export const Home = () => {
             setSearchTabs([])
         }
     }
+
    
     useEffect(()=>{
       getAllGroups();

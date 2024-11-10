@@ -1,4 +1,5 @@
 // to get the popup in the center
+let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiNjczMDRjZjZlNzY2NDM2Zjg3YWY0YmZkIiwiaWF0IjoxNzMxMjE4NjgxfQ.NIImj_DTj0P__bj34BXL3QsV6pVqJkz1VTTaM-2jpzY';
 chrome.action.onClicked.addListener(function () {
     chrome.system.display.getInfo(function (displays) {
         let primaryDisplay = displays.find(display => display.isPrimary);
@@ -32,6 +33,85 @@ chrome.action.onClicked.addListener(function () {
                 }
             });
         });
+    });
+});
+
+/* tab usage/analysis */
+
+let usageData = [];
+function saveDataLocally() {
+    chrome.storage.local.set({ unsentUsageData: usageData });
+}
+
+// when a tab is opened
+chrome.tabs.onActivated.addListener((activeInfo) => {
+    const now = new Date().toISOString();
+
+    // mark the last opened tab 'inactive' and record its close time
+    if (usageData.length > 0) {
+        const lastTab = usageData[usageData.length - 1];
+        if (!lastTab.closedAt) {
+            lastTab.closedAt = now;
+            saveDataLocally();
+        }
+    }
+
+    // Add new entry for the newly activated tab
+    chrome.tabs.get(activeInfo.tabId, (tab) => {
+        const newTabData = {
+            tabId: tab.id,
+            url: tab.url,
+            title: tab.title,
+            favIconUrl: tab.favIconUrl,
+            openedAt: now,
+            closedAt: null, 
+        };
+        usageData.push(newTabData);
+        saveDataLocally();
+    });
+});
+
+// when a tab is closed
+chrome.tabs.onRemoved.addListener((tabId) => {
+    const now = new Date().toISOString();
+
+    const tabIndex = usageData.findIndex(tab => tab.tabId === tabId);
+    if (tabIndex !== -1) {
+        usageData[tabIndex].closedAt = now;
+        saveDataLocally();
+    }
+});
+
+
+/* tab usage/analysis */
+
+chrome.action.onClicked.addListener(() => {
+    chrome.storage.local.get(['unsentUsageData'], (result) => {
+        if (result.unsentUsageData) {
+            const data = {
+                usageData: result.unsentUsageData
+            };
+            const authToken = token;
+            // console.log(authToken);
+            // console.log(token);
+            // const authToken = token;
+            console.log(authToken);
+
+            fetch('http://localhost:4000/api/tab/usage/', {
+                method: 'POST',
+                headers: { 
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                
+            }).catch(error => {
+                console.error("Error sending data:", error);
+            });
+
+            chrome.storage.local.remove('unsentUsageData');
+        }
     });
 });
 
@@ -85,6 +165,9 @@ chrome.runtime.onConnect.addListener((port) => {
         }
         else if(action == 13){
             unbookmark(action, msg.tab);
+        }
+        else if(action == 15){
+            handleSetToken(action, msg.token);
         }
     });
 
@@ -297,10 +380,35 @@ chrome.runtime.onConnect.addListener((port) => {
             }
         });
     };
-    
-    
+
+    const handleSetToken = (action, authToken) => {
+        token = authToken;
+    }
+
 
 });
+
+chrome.windows.onRemoved.addListener((windowId) => {
+    chrome.windows.getAll({ populate: true }, (windows) => {
+        const remainingNormalWindows = windows.filter(win => win.type === 'normal');
+
+        if (remainingNormalWindows.length === 0) {
+            if (usageData.length > 0) {
+                const now = new Date().toISOString();
+
+                usageData = usageData.map(tab => {
+                    if (tab.windowId === windowId && !tab.closedAt) {
+                        tab.closedAt = now;
+                    }
+                    return tab;
+                });
+
+                saveDataLocally();
+            }
+        }
+    });
+});
+
 
 
 
