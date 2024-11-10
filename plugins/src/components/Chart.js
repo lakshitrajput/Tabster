@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Histogram from './Histogram';
+import PieChart from './PieChart';
 
 export default function Chart() {
 
@@ -26,6 +27,7 @@ export default function Chart() {
     useEffect(() => {
         fetchData();
     },[])
+console.log(data);
 
   return (
       <div >
@@ -39,6 +41,7 @@ export default function Chart() {
               </div>
               <div>
                <Histogram data={data}/>
+               <PieChart data={data}/>
               </div>
           </div>
       </div>
