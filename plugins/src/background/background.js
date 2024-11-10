@@ -1,5 +1,5 @@
 // to get the popup in the center
-let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiNjczMDRjZjZlNzY2NDM2Zjg3YWY0YmZkIiwiaWF0IjoxNzMxMjE4NjgxfQ.NIImj_DTj0P__bj34BXL3QsV6pVqJkz1VTTaM-2jpzY';
+let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiNjczMDY4NDk4YWQ4MTRlNTQwNTNiNGZiIiwiaWF0IjoxNzMxMjI1Njc1fQ.CfLHbera3ONcEsmrlJ5wHinwDrbi0RNhzdI-OVOcC3c';
 chrome.action.onClicked.addListener(function () {
     chrome.system.display.getInfo(function (displays) {
         let primaryDisplay = displays.find(display => display.isPrimary);
@@ -85,6 +85,8 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 
 /* tab usage/analysis */
 
+console.log("tesr",localStorage.getItem('authToken'));
+
 chrome.action.onClicked.addListener(() => {
     chrome.storage.local.get(['unsentUsageData'], (result) => {
         if (result.unsentUsageData) {
@@ -95,7 +97,8 @@ chrome.action.onClicked.addListener(() => {
             // console.log(authToken);
             // console.log(token);
             // const authToken = token;
-            console.log(authToken);
+            // console.log(authToken);
+            
 
             fetch('http://localhost:4000/api/tab/usage/', {
                 method: 'POST',

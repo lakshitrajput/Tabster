@@ -1,7 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Chart() {
+
+ 
+    const fetchData = async () => {
+        try {
+            const authToken = localStorage.getItem('authToken');
+            const res = await fetch('http://localhost:4000/api/tab/usage', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+            });
+            const response = await res.json();
+            console.log(response);
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    },[])
+
   return (
       <div className='home'>
           <div className='home-content'>

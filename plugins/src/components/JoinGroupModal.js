@@ -26,7 +26,7 @@ export default function JoinGroupModal({ setShowJoinGroup }) {
           navigate("/");
           setShowJoinGroup(false);
       }else{
-          toast.error(response.msg);
+          toast.error("Invalid");
       }
   }
 

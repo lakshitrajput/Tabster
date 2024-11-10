@@ -164,7 +164,7 @@ export const Home = () => {
                                     Connecting Server   <Loader />
                             </div>}
 
-                                {groups.map((group) => (
+                                {groups.length > 0 && groups.map((group) => (
                                     <GroupCard color={group.colour} name={group.name} key={group._id} id={group._id} />
                                 ))}
                             </div>
