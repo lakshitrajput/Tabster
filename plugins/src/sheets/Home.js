@@ -112,6 +112,13 @@ export const Home = () => {
         port.postMessage(msg);
     }
 
+    useEffect(()=>{
+        if(localStorage.getItem("authToken")){
+            chrome.storage.local.set({ authToken: localStorage.getItem("authToken") }, function () {
+                console.log("authToken is saved.");
+            });
+        }
+    },[localStorage.getItem("authToken")])
   
     return (
         <>

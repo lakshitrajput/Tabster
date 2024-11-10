@@ -1,5 +1,5 @@
 // to get the popup in the center
-let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiNjczMDY4NDk4YWQ4MTRlNTQwNTNiNGZiIiwiaWF0IjoxNzMxMjI1Njc1fQ.CfLHbera3ONcEsmrlJ5wHinwDrbi0RNhzdI-OVOcC3c';
+// let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiNjczMDY4NDk4YWQ4MTRlNTQwNTNiNGZiIiwiaWF0IjoxNzMxMjI1Njc1fQ.CfLHbera3ONcEsmrlJ5wHinwDrbi0RNhzdI-OVOcC3c';
 chrome.action.onClicked.addListener(function () {
     chrome.system.display.getInfo(function (displays) {
         let primaryDisplay = displays.find(display => display.isPrimary);
@@ -85,7 +85,7 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 
 /* tab usage/analysis */
 
-console.log("tesr",localStorage.getItem('authToken'));
+// console.log("tesr",localStorage.getItem('authToken'));
 
 chrome.action.onClicked.addListener(() => {
     chrome.storage.local.get(['unsentUsageData'], (result) => {
@@ -93,26 +93,27 @@ chrome.action.onClicked.addListener(() => {
             const data = {
                 usageData: result.unsentUsageData
             };
-            const authToken = token;
-            // console.log(authToken);
-            // console.log(token);
-            // const authToken = token;
-            // console.log(authToken);
-            
+         let authToken;
+            chrome.storage.local.get(["authToken"], function (result) {
+                console.log(result);
+                if (result.authToken) {
+                    fetch('http://localhost:4000/api/tab/usage/', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${result.authToken}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    }).then(response => {
 
-            fetch('http://localhost:4000/api/tab/usage/', {
-                method: 'POST',
-                headers: { 
-                    'Authorization': `Bearer ${authToken}`,
-                    'Content-Type': 'application/json' 
-                },
-                body: JSON.stringify(data)
-            }).then(response => {
-                
-            }).catch(error => {
-                console.error("Error sending data:", error);
+                    }).catch(error => {
+                        console.error("Error sending data:", error);
+                    });
+
+                } else {
+                    console.log("authToken not found.");
+                }
             });
-
             chrome.storage.local.remove('unsentUsageData');
         }
     });
