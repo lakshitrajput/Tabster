@@ -29,7 +29,7 @@ function Auth() {
     async function handleSubmit(e) {
         e.preventDefault();
         if (login === true && user.email.length > 4 && user.password.length > 5) {
-            const request = await fetch("http://localhost:4000/api/auth/login", {
+            const request = await fetch("https://deplo2.onrender.com/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -50,7 +50,7 @@ function Auth() {
             }
         }
         else if (login === false && user.name.length > 4 && user.email.length > 4 && user.password.length > 4) {
-            const request = await fetch("http://localhost:4000/api/auth/register", {
+            const request = await fetch("https://deplo2.onrender.com/api/auth/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

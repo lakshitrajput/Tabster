@@ -75,7 +75,7 @@ const GroupTabCard = ({ tab, port, groups, refreshTabs, groupID }) => {
                 return;
             }
 
-            const res = await fetch('http://localhost:4000/api/group', {
+            const res = await fetch('https://deplo2.onrender.com/api/group', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ const GroupTabCard = ({ tab, port, groups, refreshTabs, groupID }) => {
     const handleAddGroup = async (group) => {
         try {
             const authToken = localStorage.getItem('authToken');
-            const res = await fetch('http://localhost:4000/api/group', {
+            const res = await fetch('https://deplo2.onrender.com/api/group', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ const GroupTabCard = ({ tab, port, groups, refreshTabs, groupID }) => {
     const handleRemoveTab = async () => {
         try {
             const authToken = localStorage.getItem('authToken');
-            const res = await fetch('http://localhost:4000/api/group/remove', {
+            const res = await fetch('https://deplo2.onrender.com/api/group/remove', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -233,7 +233,7 @@ const GroupTabCard = ({ tab, port, groups, refreshTabs, groupID }) => {
                         zIndex: 5
                     }}>
 
-                        <i className="fa fa-user-secret icon" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Drag" style={{
+                        <i className="fa fa-user-secret icon" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Incognito" style={{
                             // position: "absolute",
                             // top: "5px",
                             // left: "5px",

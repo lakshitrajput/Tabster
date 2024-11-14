@@ -18,7 +18,7 @@ export const Home = () => {
     const getAllGroups = async () => {
         setLoading(true)
         const authToken = localStorage.getItem('authToken');
-        const res = await fetch('http://localhost:4000/api/group', {
+        const res = await fetch('https://deplo2.onrender.com/api/group', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${authToken}`

@@ -132,7 +132,7 @@ chrome.action.onClicked.addListener(() => {
          let authToken;
             chrome.storage.local.get(["authToken"], function (result) {
                 if (result.authToken) {
-                    fetch('http://localhost:4000/api/tab/usage/', {
+                    fetch('https://deplo2.onrender.com/api/tab/usage/', {
                         method: 'POST',
                         headers: {
                             'Authorization': `Bearer ${result.authToken}`,
@@ -282,7 +282,7 @@ chrome.runtime.onConnect.addListener((port) => {
             }
             else if (existingTabWithSameUrl) {
                 chrome.tabs.update(existingTabWithSameUrl.id, { active: true });
-                fetch('http://localhost:4000/api/tab', {
+                fetch('https://deplo2.onrender.com/api/tab', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -300,7 +300,7 @@ chrome.runtime.onConnect.addListener((port) => {
             else {
                 // If the tab does not exist, open a new one with the specified URL
                 chrome.tabs.create({ url: tab.url }, (newTab) => {
-                    fetch('http://localhost:4000/api/tab', {
+                    fetch('https://deplo2.onrender.com/api/tab', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
