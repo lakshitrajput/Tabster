@@ -1,12 +1,12 @@
 # Tabster-React Chrome Extension
 ## Getting Started
 
-# For Frontend/Plugins
+## For Frontend/Plugins
 1. npm i to install dependancies
 2. npm start to start running the fast development mode Webpack build process that bundle files into the dist folder
 3. npm i --save-dev <package_name> to install new packages
 
-# For Backend
+## For Backend
 1. npm i to install dependencies.
 2. Create a .env in the root directory of the project.
 3. Add: MONGODB_URL=<your_mongoDB_url> and JWT_KEY<JWT_private_key>
