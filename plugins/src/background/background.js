@@ -133,7 +133,7 @@ function sendUsageData(authToken, data, retryCount = 3) {
         return;
     }
 
-    fetch('http://localhost:4000/api/tab/usage/', {
+    fetch('https://tabster.onrender.com/api/tab/usage/', {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${authToken}`,
@@ -188,7 +188,7 @@ chrome.action.onClicked.addListener(() => {
             chrome.storage.local.get(["authToken"], function (result) {
                 if (result.authToken) {
                     // Ping the backend to ensure it is awake
-                    pingBackend('http://localhost:4000/healthcheck', () => {
+                    pingBackend('https://tabster.onrender.com/healthcheck', () => {
                         // Once backend is ready, send the data
                         sendUsageData(result.authToken, data);
                     });
@@ -337,7 +337,7 @@ chrome.runtime.onConnect.addListener((port) => {
             }
             else if (existingTabWithSameUrl) {
                 chrome.tabs.update(existingTabWithSameUrl.id, { active: true });
-                fetch('http://localhost:4000/api/tab', {
+                fetch('https://tabster.onrender.com/api/tab', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -355,7 +355,7 @@ chrome.runtime.onConnect.addListener((port) => {
             else {
                 // If the tab does not exist, open a new one with the specified URL
                 chrome.tabs.create({ url: tab.url }, (newTab) => {
-                    fetch('http://localhost:4000/api/tab', {
+                    fetch('https://tabster.onrender.com/api/tab', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'

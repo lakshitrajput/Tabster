@@ -18,7 +18,7 @@ export const Group = () => {
 
     const getAllGroups = async () => {
         const authToken = localStorage.getItem('authToken');
-        const res = await fetch('http://localhost:4000/api/group', {
+        const res = await fetch('https://tabster.onrender.com/api/group', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${authToken}`
@@ -89,7 +89,7 @@ export const Group = () => {
 
     const handleUngroup = async () => {
         const authToken = localStorage.getItem('authToken');
-        const res = await fetch('http://localhost:4000/api/group', {
+        const res = await fetch('https://tabster.onrender.com/api/group', {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${authToken}`,

@@ -90,7 +90,7 @@ const Card = ({ tab, port, groups, refreshGroup }) => {
                 return;
             }
 
-            const res = await fetch('http://localhost:4000/api/group', {
+            const res = await fetch('https://tabster.onrender.com/api/group', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ const Card = ({ tab, port, groups, refreshGroup }) => {
     const handleAddGroup = async (group) => {
         try {
             const authToken = localStorage.getItem('authToken');
-            const res = await fetch('http://localhost:4000/api/group', {
+            const res = await fetch('https://tabster.onrender.com/api/group', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
