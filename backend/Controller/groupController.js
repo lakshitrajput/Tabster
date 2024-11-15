@@ -31,6 +31,7 @@ async function createGroup(req, res){
             name: name,
             colour: color,
             tabs: [existTab._id],
+            createdBy: userId,
             groupCode: groupCode
         })
         const populatedGroup = await group.populate('tabs');
@@ -146,6 +147,14 @@ async function ungroup(req, res){
             $pull: { groups: groupId }
         });
 
+        const gp = await groupModel.findOne({ _id: groupId });
+        if(user !== gp.createdBy){
+            res.status(200).json({
+                success:true,
+                msg: "group can be ungrouped by creator only"
+            });
+            return;
+        }
         await groupModel.deleteOne({ _id: groupId });
         res.status(200).json({
             success:true,

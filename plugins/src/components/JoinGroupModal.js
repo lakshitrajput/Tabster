@@ -10,7 +10,7 @@ export default function JoinGroupModal({ setShowJoinGroup }) {
   const handleSubmit=async(e)=>{
       e.preventDefault();
       const authToken = localStorage.getItem('authToken');
-      const res = await fetch(`https://deplo2.onrender.com/api/group/add`, {
+      const res = await fetch(`http://localhost:4000/api/group/add`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',

@@ -10,8 +10,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cors());
 
-
-const server = app.listen(4000,()=>{
+const port = process.env.port || 4000;
+const server = app.listen(port,()=>{
     console.log("App started on PORT 4000");
 })
 
@@ -24,4 +24,7 @@ const groupRouter = require('./Routes/groupRoutes');
 app.use('/api/auth', authRouter);
 app.use('/api/tab', tabRouter);
 app.use('/api/group', groupRouter);
-
+app.get('/healthcheck', (req, res) => {
+    console.log('I am alive!!!');
+    res.status(200).send('Backend is alive!!!');
+});

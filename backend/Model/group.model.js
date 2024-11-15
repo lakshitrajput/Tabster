@@ -12,6 +12,10 @@ const groupSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref: 'tabModel'
     }],
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'userModel'
+    },
     groupCode: {
         type: String
     }

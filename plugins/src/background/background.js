@@ -123,36 +123,91 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 
 // console.log("tesr",localStorage.getItem('authToken'));
 
+function sendUsageData(authToken, data, retryCount = 3) {
+    if (retryCount === 0) {
+        console.error("Failed to send usage data after multiple attempts.");
+        // Save unsent data for future retry
+        chrome.storage.local.set({ unsentUsageData: data.usageData }, () => {
+            console.log("Data saved for retry.");
+        });
+        return;
+    }
+
+    fetch('http://localhost:4000/api/tab/usage/', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (response.ok) {
+                console.log("Data sent successfully:");
+                // Remove unsent data after successful send
+                chrome.storage.local.remove('unsentUsageData', () => {
+                    console.log("Unsent data cleared.");
+                });
+            } else {
+                console.error("Server responded with error:", response.statusText);
+                throw new Error("Failed response");
+            }
+        })
+        .catch(error => {
+            console.error("Error sending data, retrying:", error);
+            setTimeout(() => {
+                sendUsageData(authToken, data, retryCount - 1);
+            }, 2000); 
+        });
+}
+
+function pingBackend(healthCheckUrl, callback) {
+    fetch(healthCheckUrl)
+        .then(response => {
+            if (response.ok) {
+                console.log("Backend is awake.");
+                callback();
+            } else {
+                console.error("Backend health check failed:", response.statusText);
+                throw new Error("Health check failed");
+            }
+        })
+        .catch(error => {
+            console.error("Backend is not available:", error);
+        });
+}
+
 chrome.action.onClicked.addListener(() => {
+    console.log('start');
     chrome.storage.local.get(['unsentUsageData'], (result) => {
         if (result.unsentUsageData) {
             const data = {
                 usageData: result.unsentUsageData
             };
-         let authToken;
+
             chrome.storage.local.get(["authToken"], function (result) {
                 if (result.authToken) {
-                    fetch('https://deplo2.onrender.com/api/tab/usage/', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${result.authToken}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    }).then(response => {
-
-                    }).catch(error => {
-                        console.error("Error sending data:", error);
+                    // Ping the backend to ensure it is awake
+                    pingBackend('http://localhost:4000/healthcheck', () => {
+                        // Once backend is ready, send the data
+                        sendUsageData(result.authToken, data);
                     });
-
                 } else {
                     console.log("authToken not found.");
                 }
             });
-            chrome.storage.local.remove('unsentUsageData');
         }
     });
 });
+
+setInterval(() => {
+    chrome.storage.local.get(['unsentUsageData', 'authToken'], (result) => {
+        if (result.unsentUsageData && result.authToken) {
+            sendUsageData(result.authToken, { usageData: result.unsentUsageData });
+        }
+    });
+}, 6000); 
+
 
 
 chrome.runtime.onConnect.addListener((port) => {
@@ -282,7 +337,7 @@ chrome.runtime.onConnect.addListener((port) => {
             }
             else if (existingTabWithSameUrl) {
                 chrome.tabs.update(existingTabWithSameUrl.id, { active: true });
-                fetch('https://deplo2.onrender.com/api/tab', {
+                fetch('http://localhost:4000/api/tab', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -300,7 +355,7 @@ chrome.runtime.onConnect.addListener((port) => {
             else {
                 // If the tab does not exist, open a new one with the specified URL
                 chrome.tabs.create({ url: tab.url }, (newTab) => {
-                    fetch('https://deplo2.onrender.com/api/tab', {
+                    fetch('http://localhost:4000/api/tab', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
