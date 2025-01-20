@@ -11,7 +11,7 @@ export default function Chart() {
     const fetchData = async () => {
         try {
             const authToken = localStorage.getItem('authToken');
-            const res = await fetch('https://tabster.onrender.com/api/tab/usage', {
+            const res = await fetch('https://deplo2.onrender.com/api/tab/usage', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${authToken}`
